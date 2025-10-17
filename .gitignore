@@ -5,3 +5,20 @@
 # React Router
 /.react-router/
 /build/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+node_modules/
+dist/
+build/
+.react-router/
+.env
+*.log
+.DS_Store
+coverage/
+.vscode/
+.idea/
