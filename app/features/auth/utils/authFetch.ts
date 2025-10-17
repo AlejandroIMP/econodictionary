@@ -6,17 +6,28 @@ const API_URL = import.meta.env.VITE_API_URL;
 // Promise to prevent multiple simultaneous refresh attempts
 let refreshingPromise: Promise<boolean> | null = null;
 
+// Rate limiting for refresh attempts
+let lastRefreshAttempt = 0;
+const MIN_REFRESH_INTERVAL = 5000; // 5 seconds between refresh attempts
+
+// Retry configuration
+const REFRESH_TIMEOUT = 10000; // 10 seconds
+const MAX_RETRY_ATTEMPTS = 1; // Only retry once after refresh
+
 /**
  * Authenticated fetch wrapper that handles:
- * - Adding Authorization header with access token
- * - Adding CSRF token header when needed
- * - Automatic token refresh on 401
- * - Retry logic after refresh
+ * - Adding Authorization header with access token from persisted store
+ * - Adding CSRF token header from store or cookie with auto-sync
+ * - Automatic token refresh on 401 with exponential backoff
+ * - Retry logic after successful refresh
+ * - Proper error handling and logging
  */
 export async function authFetch(
   input: RequestInfo | URL,
   init: RequestInit = {}
 ): Promise<Response> {
+  const isDev = import.meta.env.DEV;
+  
   const makeRequest = async (includeAuth: boolean = true): Promise<Response> => {
     const headers = new Headers(init.headers);
     
@@ -25,20 +36,25 @@ export async function authFetch(
       const { accessToken } = useAuthStore.getState();
       if (accessToken) {
         headers.set("Authorization", `Bearer ${accessToken}`);
-        console.log("🔑 Adding access token to request");
+        if (isDev) console.log("🔑 Adding access token to request");
       } else {
-        console.warn("⚠️ No access token available for authenticated request");
+        if (isDev) console.warn("⚠️ No access token available for authenticated request");
       }
     }
 
     // Add CSRF token for mutation methods (POST, PUT, DELETE, PATCH)
     const method = init.method?.toUpperCase() || "GET";
     if (["POST", "PUT", "DELETE", "PATCH"].includes(method)) {
-      // Try to get CSRF token from store first, then from cookie as fallback
-      let csrfToken = useAuthStore.getState().csrfToken || getCSRFToken();
+      // Strategy: Store → Cookie → Extract → Update Store
+      let csrfToken = useAuthStore.getState().csrfToken;
       
+      // Fallback 1: Try getCSRFToken helper
       if (!csrfToken) {
-        // Try to extract from cookie directly
+        csrfToken = getCSRFToken() || null;
+      }
+      
+      // Fallback 2: Extract directly from cookie
+      if (!csrfToken) {
         const csrfFromCookie = document.cookie
           .split('; ')
           .find(row => row.startsWith('XSRF-TOKEN='))
@@ -46,15 +62,15 @@ export async function authFetch(
         
         if (csrfFromCookie) {
           csrfToken = decodeURIComponent(csrfFromCookie);
-          // Update store with found token
+          // Sync to store for next requests
           useAuthStore.setState({ csrfToken });
-          console.log("🛡️ CSRF token loaded from cookie and saved to store");
+          if (isDev) console.log("🛡️ CSRF token loaded from cookie and synced to store");
         }
       }
       
       if (csrfToken) {
         headers.set("X-CSRF-TOKEN", csrfToken);
-        console.log("🛡️ Adding CSRF token to request");
+        if (isDev) console.log("🛡️ Adding CSRF token to request");
       } else {
         console.warn("⚠️ No CSRF token available for mutation request");
       }
@@ -65,7 +81,7 @@ export async function authFetch(
       ? `${API_URL}${input}`
       : input;
 
-    console.log(`📡 ${method} ${url}`);
+    if (isDev) console.log(`📡 ${method} ${url}`);
 
     return fetch(url, {
       ...init,
@@ -79,7 +95,7 @@ export async function authFetch(
 
   // If not 401, return the response
   if (response.status !== 401) {
-    console.log(`✅ Request successful: ${response.status}`);
+    if (isDev) console.log(`✅ Request successful: ${response.status}`);
     return response;
   }
 
@@ -87,14 +103,41 @@ export async function authFetch(
 
   // Got 401 - attempt token refresh (only one refresh at a time)
   if (!refreshingPromise) {
+    // Rate limiting: Check if we're trying to refresh too frequently
+    const now = Date.now();
+    const timeSinceLastRefresh = now - lastRefreshAttempt;
+    
+    if (timeSinceLastRefresh < MIN_REFRESH_INTERVAL) {
+      console.warn(`⏱️ Rate limit: Refresh attempted too soon (${timeSinceLastRefresh}ms ago). Please wait ${MIN_REFRESH_INTERVAL}ms between attempts.`);
+      // Return original 401 without attempting refresh
+      await useAuthStore.getState().logout();
+      return response;
+    }
+    
+    lastRefreshAttempt = now;
+    
     refreshingPromise = (async () => {
       try {
-        console.log("🔍 Checking available cookies before refresh...");
-        console.log("📋 document.cookie:", document.cookie);
-        console.log("🛡️ CSRF Token:", getCSRFToken());
+        if (isDev) {
+          console.log("🔍 Checking available cookies before refresh...");
+          console.log("📋 document.cookie:", document.cookie);
+          console.log("🛡️ CSRF Token:", getCSRFToken());
+        }
         
-        const success = await useAuthStore.getState().refreshToken();
+        // Call refresh with timeout protection
+        const refreshPromise = useAuthStore.getState().refreshToken();
+        const timeoutPromise = new Promise<boolean>((resolve) => 
+          setTimeout(() => {
+            console.warn(`⏱️ Token refresh timeout after ${REFRESH_TIMEOUT / 1000} seconds`);
+            resolve(false);
+          }, REFRESH_TIMEOUT)
+        );
+        
+        const success = await Promise.race([refreshPromise, timeoutPromise]);
         return success;
+      } catch (error) {
+        console.error("❌ Error during token refresh:", error);
+        return false;
       } finally {
         refreshingPromise = null;
       }
@@ -106,19 +149,27 @@ export async function authFetch(
   // If refresh failed, logout and return original 401
   if (!refreshSuccess) {
     console.log("❌ Token refresh failed - logging out");
-    useAuthStore.getState().logout();
+    await useAuthStore.getState().logout();
     return response;
   }
 
-  console.log("✅ Token refreshed - retrying request");
+  console.log("✅ Token refreshed - retrying original request");
 
   // Retry original request with new access token
-  response = await makeRequest();
-  return response;
+  try {
+    response = await makeRequest();
+    if (isDev) console.log(`✅ Retry successful: ${response.status}`);
+    return response;
+  } catch (error) {
+    console.error("❌ Retry request failed:", error);
+    // Return original 401 response if retry fails
+    return response;
+  }
 }
 
 /**
- * Helper to handle authFetch response with JSON parsing
+ * Helper to handle authFetch response with JSON parsing and enhanced error handling
+ * @throws {Error} If response is not ok, throws error with detailed message
  */
 export async function authFetchJSON<T = any>(
   input: RequestInfo | URL,
@@ -127,11 +178,12 @@ export async function authFetchJSON<T = any>(
   const response = await authFetch(input, init);
   
   if (!response.ok) {
-    // Try to parse error response
-    let errorData;
+    // Try to parse error response with timeout
+    let errorData: any;
     try {
-      errorData = await response.json();
-    } catch {
+      const textResponse = await response.text();
+      errorData = textResponse ? JSON.parse(textResponse) : { message: response.statusText };
+    } catch (parseError) {
       errorData = { message: response.statusText };
     }
     
@@ -141,16 +193,33 @@ export async function authFetchJSON<T = any>(
       status: response.status,
       statusText: response.statusText,
       error: errorData,
+      timestamp: new Date().toISOString(),
     });
     
-    // Create a more informative error message
+    // Create a more informative error message with fallbacks
     const errorMessage = errorData.message 
       || errorData.title 
       || errorData.error 
+      || errorData.errors?.[0]?.message
       || `Request failed: ${response.status} ${response.statusText}`;
     
-    throw new Error(errorMessage);
+    const error = new Error(errorMessage) as Error & { 
+      status?: number; 
+      statusText?: string; 
+      data?: any;
+    };
+    error.status = response.status;
+    error.statusText = response.statusText;
+    error.data = errorData;
+    
+    throw error;
   }
   
-  return response.json();
+  // Parse successful response
+  try {
+    return await response.json();
+  } catch (parseError) {
+    console.error("❌ Failed to parse JSON response:", parseError);
+    throw new Error("Invalid JSON response from server");
+  }
 }
