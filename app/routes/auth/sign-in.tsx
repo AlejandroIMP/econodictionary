@@ -5,6 +5,7 @@ import { z } from "zod";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { Button } from "~/features/shared/components/ui/button";
 import { Input } from "~/features/shared/components/ui/input";
+import { PasswordInput } from "~/features/shared/components/ui/password-input";
 import { Label } from "~/features/shared/components/ui/label";
 import { useAuth } from "~/features/auth/hooks";
 
@@ -72,9 +73,8 @@ export default function SignIn() {
             <Label htmlFor="password" className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
               Password
             </Label>
-            <Input
+            <PasswordInput
               id="password"
-              type="password"
               placeholder="Enter your password"
               {...register("password")}
               className="mt-1"

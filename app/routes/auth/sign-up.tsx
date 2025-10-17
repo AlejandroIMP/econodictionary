@@ -1,20 +1,30 @@
 import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {  z } from "zod";
+import { z } from "zod";
 import { ArrowLeft, Loader2 } from "lucide-react";
 
 import { Button } from "~/features/shared/components/ui/button";
 import { Input } from "~/features/shared/components/ui/input";
+import { PasswordInput } from "~/features/shared/components/ui/password-input";
 import { Label } from "~/features/shared/components/ui/label";
+import { 
+  passwordSchema, 
+  emailSchema, 
+  usernameSchema, 
+  nameSchema
+} from "~/features/auth/utils/validationSchemas";
 
 const signUpSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters").max(100, "Name must be less than 100 characters"),
-  surname: z.string().min(2, "Surname must be at least 2 characters").max(100, "Surname must be less than 100 characters"),
-  username: z.string().min(2, "Username must be at least 2 characters").max(30, "Username must be less than 30 characters"),
-  email: z.email("Invalid email address").max(100, "Email must be less than 100 characters"),
-  password: z.string().min(6, "Password must be at least 6 characters").max(100, "Password must be less than 100 characters").uppercase("Password must contain at least one uppercase letter").lowercase("Password must contain at least one lowercase letter").regex(/[0-9]/, "Password must contain at least one number").regex(/[^a-zA-Z0-9]/, "Password must contain at least one special character"),
-  confirmPassword: z.string().min(6, "Confirm Password must be at least 6 characters").max(100, "Confirm Password must be less than 100 characters").uppercase("Confirm Password must contain at least one uppercase letter").lowercase("Confirm Password must contain at least one lowercase letter").regex(/[0-9]/, "Confirm Password must contain at least one number").regex(/[^a-zA-Z0-9]/, "Confirm Password must contain at least one special character"),
+  name: nameSchema,
+  surname: nameSchema,
+  username: usernameSchema,
+  email: emailSchema,
+  password: passwordSchema,
+  confirmPassword: passwordSchema,
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Passwords don't match",
+  path: ["confirmPassword"],
 });
 
 type SignUpFormData = z.infer<typeof signUpSchema>;
@@ -122,9 +132,8 @@ export default function SignUp() {
             <Label htmlFor="password" className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
               Password
             </Label>
-            <Input
+            <PasswordInput
               id="password"
-              type="password"
               placeholder="Enter your password"
               {...register("password")}
               className="mt-1"
@@ -138,9 +147,8 @@ export default function SignUp() {
             <Label htmlFor="confirmPassword" className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
               Confirm Password
             </Label>
-            <Input
+            <PasswordInput
               id="confirmPassword"
-              type="password"
               placeholder="Confirm your password"
               {...register("confirmPassword")}
               className="mt-1"

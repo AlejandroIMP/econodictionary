@@ -4,13 +4,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { Button } from "~/features/shared/components/ui/button";
-import { Input } from "~/features/shared/components/ui/input";
+import { PasswordInput } from "~/features/shared/components/ui/password-input";
 import { Label } from "~/features/shared/components/ui/label";
+import { passwordSchema } from "~/features/auth/utils/validationSchemas";
 
 const resetPasswordSchema = z.object({
   token: z.string().min(1, "Token is required"),
-  password: z.string().min(6, "Password must be at least 6 characters").max(100, "Password must be less than 100 characters").uppercase("Password must contain at least one uppercase letter").lowercase("Password must contain at least one lowercase letter").regex(/[0-9]/, "Password must contain at least one number").regex(/[^a-zA-Z0-9]/, "Password must contain at least one special character"),
-  confirmPassword: z.string().min(6, "Confirm Password must be at least 6 characters").max(100, "Confirm Password must be less than 100 characters").uppercase("Confirm Password must contain at least one uppercase letter").lowercase("Confirm Password must contain at least one lowercase letter").regex(/[0-9]/, "Confirm Password must contain at least one number").regex(/[^a-zA-Z0-9]/, "Confirm Password must contain at least one special character"),
+  password: passwordSchema,
+  confirmPassword: passwordSchema,
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Passwords do not match",
+  path: ["confirmPassword"],
 });
 
 type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>;
@@ -77,9 +81,8 @@ export default function ResetPassword() {
             <Label htmlFor="password" className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
               New Password
             </Label>
-            <Input
+            <PasswordInput
               id="password"
-              type="password"
               placeholder="Enter your new password"
               {...register("password")}
               className="mt-1"
@@ -92,9 +95,8 @@ export default function ResetPassword() {
             <Label htmlFor="confirmPassword" className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
               Confirm New Password
             </Label>
-            <Input
+            <PasswordInput
               id="confirmPassword"
-              type="password"
               placeholder="Confirm your new password"
               {...register("confirmPassword")}
               className="mt-1"
