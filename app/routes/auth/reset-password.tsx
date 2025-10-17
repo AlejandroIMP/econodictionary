@@ -61,11 +61,14 @@ export default function ResetPassword() {
   });
 
   const onSubmit = async (data: ResetPasswordFormData) => {
-  clearError()
-    data.token = token;
-    await resetPassword(data.token, data.password);
-    
-    if(!error) navigate("/");
+    try {
+      clearError();
+      data.token = token;
+      await resetPassword(data.token, data.password, data.confirmPassword);
+      navigate("/auth/sign-in");
+    } catch (e) {
+      // Error is already set in the store
+    }
   }
 
   return (

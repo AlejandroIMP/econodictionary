@@ -37,7 +37,7 @@ interface AuthState {
   logout: () => Promise<void>;
   register: (name: string, surname: string, username: string, email: string, password: string, confirmPassword: string) => Promise<void>;
   refreshToken: () => Promise<boolean>;
-  resetPassword: (token: string, newPassword: string) => Promise<void>;
+  resetPassword: (token: string, newPassword: string, confirmPassword: string) => Promise<void>;
   requestPasswordReset: (email: string) => Promise<void>;
   clearError: () => void;
   initializeAuth: () => Promise<void>; // New: Initialize auth on app load
@@ -234,7 +234,18 @@ export const useAuthStore = create<AuthState>()(
               const errorData = await response.json().catch(() => ({ 
                 message: response.statusText 
               }));
-              throw new Error(errorData.message || "Registration failed");
+              
+              const authError: AuthError = {
+                message: errorData.message || "Registration failed",
+                errorCode: errorData.errorCode,
+              };
+              
+              set({
+                error: authError,
+                isLoading: false,
+              });
+              
+              throw authError;
             }
 
             set({
@@ -242,16 +253,22 @@ export const useAuthStore = create<AuthState>()(
               isLoading: false
             });
           } catch (error) {
+            const authError: AuthError = (error as AuthError).errorCode 
+              ? (error as AuthError)
+              : {
+                  message: error instanceof Error ? error.message : "Registration failed",
+                };
+            
             set({
-              error: {
-                message: error instanceof Error ? error.message : "Registration failed",
-              },
+              error: authError,
               isLoading: false,
             });
+            
+            throw authError;
           }
         },
 
-        resetPassword: async (token, newPassword) => {
+        resetPassword: async (token, newPassword, confirmPassword) => {
           set({ isLoading: true, error: null });
 
           try {
@@ -261,24 +278,41 @@ export const useAuthStore = create<AuthState>()(
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify({ token, newPassword }),
+              body: JSON.stringify({ token, newPassword, confirmPassword }),
             });
 
             if (!response.ok) {
               const errorData = await response.json().catch(() => ({ 
                 message: response.statusText 
               }));
-              throw new Error(errorData.message || "Password reset failed");
+              
+              const authError: AuthError = {
+                message: errorData.message || "Password reset failed",
+                errorCode: errorData.errorCode,
+              };
+              
+              set({
+                error: authError,
+                isLoading: false,
+              });
+              
+              throw authError;
             }
 
             set({ isLoading: false });
           } catch (error) {
+            const authError: AuthError = (error as AuthError).errorCode 
+              ? (error as AuthError)
+              : {
+                  message: error instanceof Error ? error.message : "Password reset failed",
+                };
+            
             set({
-              error: {
-                message: error instanceof Error ? error.message : "Password reset failed",
-              },
+              error: authError,
               isLoading: false,
             });
+            
+            throw authError;
           }
         },
 
@@ -299,17 +333,34 @@ export const useAuthStore = create<AuthState>()(
               const errorData = await response.json().catch(() => ({ 
                 message: response.statusText 
               }));
-              throw new Error(errorData.message || "Request failed");
+              
+              const authError: AuthError = {
+                message: errorData.message || "Request failed",
+                errorCode: errorData.errorCode,
+              };
+              
+              set({
+                error: authError,
+                isLoading: false,
+              });
+              
+              throw authError;
             }
 
             set({ isLoading: false });
           } catch (error) {
+            const authError: AuthError = (error as AuthError).errorCode 
+              ? (error as AuthError)
+              : {
+                  message: error instanceof Error ? error.message : "Request password reset failed",
+                };
+            
             set({
-              error: {
-                message: error instanceof Error ? error.message : "Request password reset failed",
-              },
+              error: authError,
               isLoading: false,
             });
+            
+            throw authError;
           }
         },
 
