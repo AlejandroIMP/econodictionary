@@ -7,6 +7,7 @@ export function useAuth() {
     isLoading,
     error,
     accessToken,
+    csrfToken,
     login,
     logout,
     register,
@@ -15,6 +16,7 @@ export function useAuth() {
     requestPasswordReset,
     clearError,
     initializeAuth,
+    setCsrfToken,
   } = useAuthStore();
 
   return {
@@ -23,6 +25,7 @@ export function useAuth() {
     isLoading,
     error,
     accessToken,
+    csrfToken,
     login,
     logout,
     register,
@@ -31,5 +34,6 @@ export function useAuth() {
     requestPasswordReset,
     clearError,
     initializeAuth,
+    setCsrfToken,
   };
 }

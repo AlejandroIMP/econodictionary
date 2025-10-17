@@ -28,11 +28,13 @@ interface AuthState {
   isAuthenticated: boolean;
   isLoading: boolean;
   error: AuthError | null;
-  accessToken: string | null; // Stored in memory only (not persisted)
+  accessToken: string | null; // Stored in memory and persisted
+  csrfToken: string | null; // CSRF token from cookie, persisted
 
   // Actions
   setUser: (user: User | null) => void;
   setAccessToken: (token: string | null) => void;
+  setCsrfToken: (token: string | null) => void;
   login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   register: (name: string, surname: string, username: string, email: string, password: string, confirmPassword: string) => Promise<void>;
@@ -52,7 +54,8 @@ export const useAuthStore = create<AuthState>()(
         isAuthenticated: false,
         isLoading: false,
         error: null,
-        accessToken: null, // Not persisted, memory only
+        accessToken: null,
+        csrfToken: null,
 
         // Actions
         setUser: (user) =>
@@ -64,6 +67,11 @@ export const useAuthStore = create<AuthState>()(
         setAccessToken: (token) =>
           set({
             accessToken: token,
+          }),
+
+        setCsrfToken: (token) =>
+          set({
+            csrfToken: token,
           }),
 
         login: async (email, password) => {
@@ -98,9 +106,17 @@ export const useAuthStore = create<AuthState>()(
 
             const data = await response.json();
             
+            // Extract CSRF token from cookie
+            const csrfFromCookie = document.cookie
+              .split('; ')
+              .find(row => row.startsWith('XSRF-TOKEN='))
+              ?.split('=')[1];
+            
+            const decodedCsrf = csrfFromCookie ? decodeURIComponent(csrfFromCookie) : null;
+            
             console.log("✅ Login successful, checking cookies...");
             console.log("📋 Cookies available:", document.cookie);
-            console.log("🛡️ CSRF Token:", getCSRFToken());
+            console.log("🛡️ CSRF Token:", decodedCsrf);
             
             // Server returns accessToken in body
             // refreshToken is set as HttpOnly cookie automatically
@@ -121,6 +137,7 @@ export const useAuthStore = create<AuthState>()(
               isLoading: false,
               error: null,
               accessToken: data.accessToken,
+              csrfToken: decodedCsrf,
             });
           } catch (error) {
             // Check if error is our AuthError object
@@ -162,17 +179,31 @@ export const useAuthStore = create<AuthState>()(
               isAuthenticated: false,
               error: null,
               accessToken: null,
+              csrfToken: null,
             });
           }
         },
 
         refreshToken: async () => {
           try {
-            const csrfToken = getCSRFToken();
+            // Try to get CSRF token from store first, then from cookie
+            let csrfToken = get().csrfToken || getCSRFToken();
+            
+            if (!csrfToken) {
+              // Try to extract from cookie one more time
+              const csrfFromCookie = document.cookie
+                .split('; ')
+                .find(row => row.startsWith('XSRF-TOKEN='))
+                ?.split('=')[1];
+              
+              if (csrfFromCookie) {
+                csrfToken = decodeURIComponent(csrfFromCookie);
+                set({ csrfToken });
+              }
+            }
             
             if (!csrfToken) {
               console.log("❌ No CSRF token - cannot refresh");
-              // No CSRF token means no refresh token cookie
               return false;
             }
 
@@ -234,18 +265,7 @@ export const useAuthStore = create<AuthState>()(
               const errorData = await response.json().catch(() => ({ 
                 message: response.statusText 
               }));
-              
-              const authError: AuthError = {
-                message: errorData.message || "Registration failed",
-                errorCode: errorData.errorCode,
-              };
-              
-              set({
-                error: authError,
-                isLoading: false,
-              });
-              
-              throw authError;
+              throw new Error(errorData.message || "Registration failed");
             }
 
             set({
@@ -253,22 +273,16 @@ export const useAuthStore = create<AuthState>()(
               isLoading: false
             });
           } catch (error) {
-            const authError: AuthError = (error as AuthError).errorCode 
-              ? (error as AuthError)
-              : {
-                  message: error instanceof Error ? error.message : "Registration failed",
-                };
-            
             set({
-              error: authError,
+              error: {
+                message: error instanceof Error ? error.message : "Registration failed",
+              },
               isLoading: false,
             });
-            
-            throw authError;
           }
         },
 
-        resetPassword: async (token, newPassword, confirmPassword) => {
+        resetPassword: async (token, newPassword) => {
           set({ isLoading: true, error: null });
 
           try {
@@ -278,41 +292,24 @@ export const useAuthStore = create<AuthState>()(
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify({ token, newPassword, confirmPassword }),
+              body: JSON.stringify({ token, newPassword }),
             });
 
             if (!response.ok) {
               const errorData = await response.json().catch(() => ({ 
                 message: response.statusText 
               }));
-              
-              const authError: AuthError = {
-                message: errorData.message || "Password reset failed",
-                errorCode: errorData.errorCode,
-              };
-              
-              set({
-                error: authError,
-                isLoading: false,
-              });
-              
-              throw authError;
+              throw new Error(errorData.message || "Password reset failed");
             }
 
             set({ isLoading: false });
           } catch (error) {
-            const authError: AuthError = (error as AuthError).errorCode 
-              ? (error as AuthError)
-              : {
-                  message: error instanceof Error ? error.message : "Password reset failed",
-                };
-            
             set({
-              error: authError,
+              error: {
+                message: error instanceof Error ? error.message : "Password reset failed",
+              },
               isLoading: false,
             });
-            
-            throw authError;
           }
         },
 
@@ -333,34 +330,17 @@ export const useAuthStore = create<AuthState>()(
               const errorData = await response.json().catch(() => ({ 
                 message: response.statusText 
               }));
-              
-              const authError: AuthError = {
-                message: errorData.message || "Request failed",
-                errorCode: errorData.errorCode,
-              };
-              
-              set({
-                error: authError,
-                isLoading: false,
-              });
-              
-              throw authError;
+              throw new Error(errorData.message || "Request failed");
             }
 
             set({ isLoading: false });
           } catch (error) {
-            const authError: AuthError = (error as AuthError).errorCode 
-              ? (error as AuthError)
-              : {
-                  message: error instanceof Error ? error.message : "Request password reset failed",
-                };
-            
             set({
-              error: authError,
+              error: {
+                message: error instanceof Error ? error.message : "Request password reset failed",
+              },
               isLoading: false,
             });
-            
-            throw authError;
           }
         },
 
@@ -368,10 +348,32 @@ export const useAuthStore = create<AuthState>()(
 
         // Initialize auth - Try to refresh token on app load if user was authenticated
         initializeAuth: async () => {
+          console.log("🔄 Initializing auth...");
+          
           const state = get();
           
-          // Only try to refresh if we think user should be authenticated
-          // but we don't have an access token (lost on page reload)
+          // 1. If we have stored tokens and user, we're good
+          if (state.accessToken && state.csrfToken && state.user) {
+            console.log("✅ Session restored from storage");
+            console.log("👤 User:", state.user.username);
+            console.log("🔑 Access token present");
+            console.log("🛡️ CSRF token present");
+            return;
+          }
+          
+          // 2. Try to get CSRF token from cookie if not in storage
+          const csrfFromCookie = document.cookie
+            .split('; ')
+            .find(row => row.startsWith('XSRF-TOKEN='))
+            ?.split('=')[1];
+          
+          if (csrfFromCookie) {
+            const decodedCsrf = decodeURIComponent(csrfFromCookie);
+            set({ csrfToken: decodedCsrf });
+            console.log("🛡️ CSRF token loaded from cookie:", decodedCsrf);
+          }
+          
+          // 3. If we think user should be authenticated but we don't have an access token
           if (state.isAuthenticated && !state.accessToken) {
             console.log("🔄 Attempting to restore session...");
             
@@ -381,35 +383,41 @@ export const useAuthStore = create<AuthState>()(
             const success = await get().refreshToken();
             
             if (!success) {
-              console.log("⚠️ Session restore failed - user may need to login again");
-              // Don't force logout immediately - user might have valid session
-              // Just clear the flag but keep user info for UI
-              // They'll get prompted to login when they try to do an authenticated action
+              console.log("⚠️ Session restore failed - clearing auth state");
               set({
                 accessToken: null,
-                isAuthenticated: false, // Mark as not authenticated so UI can show login
+                csrfToken: null,
+                isAuthenticated: false,
+                user: null,
               });
             } else {
               console.log("✅ Session restored successfully");
             }
+          } else if (!state.isAuthenticated) {
+            console.log("ℹ️ No active session found");
           }
         },
       }),
       {
-        name: "auth-storage-v2", // Changed version to clear old data
+        name: "auth-storage-v3", // Upgraded to v3 to include tokens
         partialize: (state) => ({
-          // Only persist safe user data, NOT accessToken
+          // Persist user data and tokens for session restoration
           user: state.user,
           isAuthenticated: state.isAuthenticated,
+          accessToken: state.accessToken,
+          csrfToken: state.csrfToken,
         }),
-        version: 2, // Add versioning
+        version: 3, // Upgraded version
         migrate: (persistedState: any, version: number) => {
-          // Migration logic if needed
-          if (version === 0 || version === 1) {
-            // Clear old data and return fresh state
+          // Migration logic from older versions
+          if (version === 0 || version === 1 || version === 2) {
+            console.log(`🔄 Migrating auth storage from v${version} to v3`);
+            // Keep user and isAuthenticated if they exist, but clear tokens
             return {
-              user: null,
-              isAuthenticated: false,
+              user: persistedState?.user || null,
+              isAuthenticated: persistedState?.isAuthenticated || false,
+              accessToken: null,
+              csrfToken: null,
             };
           }
           return persistedState;

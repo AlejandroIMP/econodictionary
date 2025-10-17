@@ -34,7 +34,24 @@ export async function authFetch(
     // Add CSRF token for mutation methods (POST, PUT, DELETE, PATCH)
     const method = init.method?.toUpperCase() || "GET";
     if (["POST", "PUT", "DELETE", "PATCH"].includes(method)) {
-      const csrfToken = getCSRFToken();
+      // Try to get CSRF token from store first, then from cookie as fallback
+      let csrfToken = useAuthStore.getState().csrfToken || getCSRFToken();
+      
+      if (!csrfToken) {
+        // Try to extract from cookie directly
+        const csrfFromCookie = document.cookie
+          .split('; ')
+          .find(row => row.startsWith('XSRF-TOKEN='))
+          ?.split('=')[1];
+        
+        if (csrfFromCookie) {
+          csrfToken = decodeURIComponent(csrfFromCookie);
+          // Update store with found token
+          useAuthStore.setState({ csrfToken });
+          console.log("🛡️ CSRF token loaded from cookie and saved to store");
+        }
+      }
+      
       if (csrfToken) {
         headers.set("X-CSRF-TOKEN", csrfToken);
         console.log("🛡️ Adding CSRF token to request");
