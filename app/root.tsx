@@ -6,10 +6,12 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
+import { useEffect } from "react";
 
 import type { Route } from "./+types/root";
 import "./app.css";
 import { GlobalNavigation } from "~/features/shared/components/GlobalNavigation";
+import { useAuthStore } from "~/features/auth/store/useAuthStore";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -54,6 +56,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+  const initializeAuth = useAuthStore((state) => state.initializeAuth);
+  
+  useEffect(() => {
+    // Initialize auth on app mount
+    initializeAuth();
+  }, [initializeAuth]);
+  
   return <Outlet />;
 }
 

@@ -14,6 +14,7 @@ export function useAuth() {
     resetPassword,
     requestPasswordReset,
     clearError,
+    initializeAuth,
   } = useAuthStore();
 
   return {
@@ -29,5 +30,6 @@ export function useAuth() {
     resetPassword,
     requestPasswordReset,
     clearError,
+    initializeAuth,
   };
 }

@@ -10,10 +10,10 @@ import {
 import { Button } from "~/features/shared/components/ui/button";
 import { Badge } from "~/features/shared/components/ui/badge";
 import { useTerms } from "~/features/terms/hooks/useTerms";
-
+import { type Term } from "~/features/terms/types";
 
 // Función para obtener un término basado en la fecha actual (cambia diariamente)
-function getDailyTerm(terms: Array<{ name: string; definition: string; category: string }>) {
+function getDailyTerm(terms: Term[]) {
   if (terms.length === 0) return null;
 
   // Usar la fecha actual en GMT como semilla para consistencia
@@ -147,7 +147,7 @@ export function TermOfTheDay({ className = "" }: TermOfTheDayProps) {
               <Badge variant="secondary" className="text-sm">
                 {dailyTerm.category}
               </Badge>
-              <Link to="/terms">
+              <Link to={`/terms/${dailyTerm.id}`}>
                 <Button variant="link" className="text-blue-600">
                   Ver más detalles
                   <ArrowRight className="w-4 h-4 ml-1" />

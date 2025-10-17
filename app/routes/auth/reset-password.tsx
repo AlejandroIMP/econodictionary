@@ -7,6 +7,8 @@ import { Button } from "~/features/shared/components/ui/button";
 import { PasswordInput } from "~/features/shared/components/ui/password-input";
 import { Label } from "~/features/shared/components/ui/label";
 import { passwordSchema } from "~/features/auth/utils/validationSchemas";
+import { useAuth } from "~/features/auth/hooks";
+import { useEffect } from "react";
 
 const resetPasswordSchema = z.object({
   token: z.string().min(1, "Token is required"),
@@ -20,9 +22,16 @@ const resetPasswordSchema = z.object({
 type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>;
 
 export default function ResetPassword() {
+  const { resetPassword, error, clearError } = useAuth();
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const token = params.get("token") || "";
+
+    useEffect(() => {
+      return () => {
+        clearError();
+      };
+    }, [clearError]);
 
 
   if (!token) {
@@ -52,14 +61,11 @@ export default function ResetPassword() {
   });
 
   const onSubmit = async (data: ResetPasswordFormData) => {
-
+  clearError()
     data.token = token;
-    // Handle sign-in logic here
-    console.log("Reset Password Data:", data);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    // Navigate to dashboard or home page after successful sign-in
-    navigate("/");
+    await resetPassword(data.token, data.password);
+    
+    if(!error) navigate("/");
   }
 
   return (

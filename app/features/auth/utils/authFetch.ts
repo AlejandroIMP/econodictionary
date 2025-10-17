@@ -25,6 +25,9 @@ export async function authFetch(
       const { accessToken } = useAuthStore.getState();
       if (accessToken) {
         headers.set("Authorization", `Bearer ${accessToken}`);
+        console.log("🔑 Adding access token to request");
+      } else {
+        console.warn("⚠️ No access token available for authenticated request");
       }
     }
 
@@ -34,6 +37,9 @@ export async function authFetch(
       const csrfToken = getCSRFToken();
       if (csrfToken) {
         headers.set("X-CSRF-TOKEN", csrfToken);
+        console.log("🛡️ Adding CSRF token to request");
+      } else {
+        console.warn("⚠️ No CSRF token available for mutation request");
       }
     }
 
@@ -41,6 +47,8 @@ export async function authFetch(
     const url = typeof input === "string" && input.startsWith("/")
       ? `${API_URL}${input}`
       : input;
+
+    console.log(`📡 ${method} ${url}`);
 
     return fetch(url, {
       ...init,
@@ -54,13 +62,20 @@ export async function authFetch(
 
   // If not 401, return the response
   if (response.status !== 401) {
+    console.log(`✅ Request successful: ${response.status}`);
     return response;
   }
+
+  console.log("🔄 Got 401 - attempting token refresh...");
 
   // Got 401 - attempt token refresh (only one refresh at a time)
   if (!refreshingPromise) {
     refreshingPromise = (async () => {
       try {
+        console.log("🔍 Checking available cookies before refresh...");
+        console.log("📋 document.cookie:", document.cookie);
+        console.log("🛡️ CSRF Token:", getCSRFToken());
+        
         const success = await useAuthStore.getState().refreshToken();
         return success;
       } finally {
@@ -73,9 +88,12 @@ export async function authFetch(
 
   // If refresh failed, logout and return original 401
   if (!refreshSuccess) {
+    console.log("❌ Token refresh failed - logging out");
     useAuthStore.getState().logout();
     return response;
   }
+
+  console.log("✅ Token refreshed - retrying request");
 
   // Retry original request with new access token
   response = await makeRequest();
@@ -92,10 +110,29 @@ export async function authFetchJSON<T = any>(
   const response = await authFetch(input, init);
   
   if (!response.ok) {
-    const errorData = await response.json().catch(() => ({ 
-      message: response.statusText 
-    }));
-    throw new Error(errorData.message || `Request failed: ${response.status}`);
+    // Try to parse error response
+    let errorData;
+    try {
+      errorData = await response.json();
+    } catch {
+      errorData = { message: response.statusText };
+    }
+    
+    // Log detailed error information for debugging
+    console.error("❌ API Error:", {
+      url: typeof input === "string" ? input : input.toString(),
+      status: response.status,
+      statusText: response.statusText,
+      error: errorData,
+    });
+    
+    // Create a more informative error message
+    const errorMessage = errorData.message 
+      || errorData.title 
+      || errorData.error 
+      || `Request failed: ${response.status} ${response.statusText}`;
+    
+    throw new Error(errorMessage);
   }
   
   return response.json();

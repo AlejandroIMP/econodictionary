@@ -251,60 +251,6 @@ export default function Home() {
       {/* Categorías Económicas - Animación staggered */}
       <CategoriesSection />
 
-      {/* Términos Populares - Scroll fade animation */}
-      <section className="py-20 bg-zinc-50 dark:bg-zinc-800">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-zinc-900 dark:text-zinc-50 mb-4">
-              Términos Más Consultados
-            </h2>
-            <p className="text-xl text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto">
-              Los conceptos que más buscan estudiantes y profesionales
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {[
-              { term: "PIB (Producto Interno Bruto)", category: "Macroeconomía" },
-              { term: "Oferta y Demanda", category: "Microeconomía" },
-              { term: "Tasa de Interés", category: "Finanzas" },
-              { term: "Tipo de Cambio", category: "Comercio Internacional" },
-              { term: "Desempleo", category: "Macroeconomía" },
-              { term: "Monopolio", category: "Microeconomía" },
-            ].map((item, index) => (
-              <Card
-                key={index}
-                className="scroll-fade opacity-0 group hover:shadow-lg transition-all duration-300 cursor-pointer"
-              >
-                <CardContent className="sm:p-6 sm:pt-0 p-6 md:pt-4">
-                  <div className="flex items-start justify-between mb-3">
-                    <BookOpen className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-                    <Badge variant="secondary" className="text-xs">
-                      {item.category}
-                    </Badge>
-                  </div>
-                  <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50 mb-2 group-hover:text-blue-600 transition-colors">
-                    {item.term}
-                  </h3>
-                  <Button variant="link" className="p-0 h-auto text-blue-600">
-                    Leer definición
-                    <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          <div className="text-center mt-12 scroll-fade opacity-0">
-            <Link to="/terms">
-              <Button size="lg" variant="outline" className="font-semibold">
-                Ver Todos los Términos
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
 
       {/* CTA Final */}
       <section className="py-20 bg-gradient-to-r from-zinc-900 to-zinc-800 text-white scroll-fade opacity-0">

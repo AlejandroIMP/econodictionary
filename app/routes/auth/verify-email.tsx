@@ -33,7 +33,6 @@ export default function EmailVerification() {
         setError(true);
       }
     } catch (error) {
-      console.error("Error verifying email:", error);
       setLoading(false);
       setError(true);
     }

@@ -51,7 +51,6 @@ export const useTermStore = create<TermsState>()(
             const data: Term = await response.json();
             set({ term: data, isLoading: false });
           } catch (error) {
-            console.error("Failed to fetch term:", error);
             set({ error: (error as Error).message, isLoading: false });
           }
         },

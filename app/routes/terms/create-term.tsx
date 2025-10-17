@@ -123,7 +123,6 @@ export default function CreateTerm() {
       // Navigate back to terms list on success
       navigate("/terms");
     } catch (error) {
-      console.error("Error creating term:", error);
       // Error is already set in store, form will show it
     } finally {
       setIsUploading(false);

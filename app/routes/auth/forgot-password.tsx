@@ -6,6 +6,8 @@ import { ArrowLeft, Loader2 } from "lucide-react";
 import { Button } from "~/features/shared/components/ui/button";
 import { Input } from "~/features/shared/components/ui/input";
 import { Label } from "~/features/shared/components/ui/label";
+import { useAuth } from "~/features/auth/hooks";
+import { useEffect } from "react";
 
 const requestResetPasswordSchema = z.object({
   email: z.string().email("Invalid email address").max(100, "Email must be less than 100 characters"),
@@ -14,7 +16,14 @@ const requestResetPasswordSchema = z.object({
 type RequestForgotPasswordFormData = z.infer<typeof requestResetPasswordSchema>;
 
 export default function RequestForgotPassword() {
+  const { requestPasswordReset, error, clearError } = useAuth();
   const navigate = useNavigate();
+
+    useEffect(() => {
+    return () => {
+      clearError();
+    };
+  }, [clearError]);
 
   const {
     register,
@@ -25,12 +34,9 @@ export default function RequestForgotPassword() {
   });
 
   const onSubmit = async (data: RequestForgotPasswordFormData) => {
-    // Handle sign-in logic here
-    console.log("Request Forgot Password Data:", data);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    // Navigate to dashboard or home page after successful sign-in
-    navigate("/");
+    clearError();
+    await requestPasswordReset(data.email);
+    if(!error) navigate("/");
   }
 
   return (

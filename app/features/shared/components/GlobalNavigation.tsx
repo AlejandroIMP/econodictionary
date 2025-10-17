@@ -85,7 +85,7 @@ export function GlobalNavigation() {
                 <Link to="/profile" onClick={closeMobileMenu}>
                   <Button variant="ghost" size="sm" className="gap-2">
                     <User className="h-4 w-4" />
-                    <span className="hidden sm:inline">{user?.name || "Profile"}</span>
+                    <span className="hidden sm:inline">{user?.username || "Profile"}</span>
                   </Button>
                 </Link>
                 <Link to="/auth/sign-out" onClick={closeMobileMenu}>
@@ -169,7 +169,7 @@ export function GlobalNavigation() {
                 >
                   <span className="flex items-center gap-2">
                     <User className="h-4 w-4" />
-                    {user?.name || "Profile"}
+                    {user?.username || "Profile"}
                   </span>
                 </Link>
                 <div className="mt-2">

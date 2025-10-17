@@ -33,6 +33,7 @@ export interface CreateTermRequest {
   category: string;
   example: string;
   imageId?: string;
+  audioId?: string | null;
 }
 
 export interface TermsFilters {

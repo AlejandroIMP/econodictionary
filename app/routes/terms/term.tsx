@@ -27,7 +27,8 @@ export default function TermDetail() {
   const { user, isAuthenticated } = useAuthStore();
   
   // Check if current user is the author
-  const canEdit = isAuthenticated && user && term && user.id === term.authorId;
+  const canEdit = isAuthenticated && user && term && user.userId === term.authorId;
+
   
   const handleDelete = async () => {
     if (!term) return;
@@ -43,7 +44,6 @@ export default function TermDetail() {
       await removeTerm(term.id);
       navigate("/terms");
     } catch (error) {
-      console.error("Failed to delete term:", error);
       alert("Failed to delete term. Please try again.");
     } finally {
       setIsDeleting(false);

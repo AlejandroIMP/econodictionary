@@ -50,7 +50,7 @@ export default function EditTerm() {
   const termId = params.term || "";
   
   const { user, isAuthenticated } = useAuthStore();
-  const { editTerm } = useTermsStore();
+  const { editTerm, error: TermError } = useTermsStore();
   const { term, isLoading, error } = useTerm(termId);
   const { categories, isLoading: categoriesLoading } = useCategories();
   
@@ -60,7 +60,7 @@ export default function EditTerm() {
   const [isUploading, setIsUploading] = useState(false);
   
   // Check authorization
-  const canEdit = isAuthenticated && user && term && user.id === term.authorId;
+  const canEdit = isAuthenticated && user && term && user.userId === term.authorId;
 
   // Create categories options (remove "All Categories" and add empty option)
   const categoryOptions = [
@@ -136,6 +136,7 @@ export default function EditTerm() {
         category: data.category,
         example: data.example,
         ...(imageId && { imageId }),
+        audioId: null, // No audio upload in edit form for now
       };
 
       // Call API through store
@@ -144,8 +145,7 @@ export default function EditTerm() {
       // Navigate back to term detail on success
       navigate(`/terms/${termId}`);
     } catch (error) {
-      console.error("Error updating term:", error);
-      // Error is already set in store, form will show it
+      console.error("Failed to edit term:", TermError);
     } finally {
       setIsUploading(false);
     }

@@ -2,12 +2,14 @@ import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { ArrowLeft, Loader2 } from "lucide-react";
+import { ArrowLeft, Loader2, AlertCircle } from "lucide-react";
 import { Button } from "~/features/shared/components/ui/button";
 import { Input } from "~/features/shared/components/ui/input";
 import { PasswordInput } from "~/features/shared/components/ui/password-input";
 import { Label } from "~/features/shared/components/ui/label";
+import { Alert, AlertDescription } from "~/features/shared/components/ui/alert";
 import { useAuth } from "~/features/auth/hooks";
+import { useEffect } from "react";
 
 const signInSchema = z.object({
   emailOrUsername: z.string().min(2, "Email or Username must be at least 2 characters").max(100, "Email or Username must be less than 100 characters"),
@@ -18,7 +20,7 @@ type SignInFormData = z.infer<typeof signInSchema>;
 
 export default function SignIn() {
   const navigate = useNavigate();
-  const { login, isLoading, error } = useAuth();
+  const { login, isLoading, error, clearError } = useAuth();
 
   const {
     register,
@@ -28,16 +30,57 @@ export default function SignIn() {
     resolver: zodResolver(signInSchema),
   });
 
+  // Clear error when component unmounts or when user starts typing
+  useEffect(() => {
+    return () => {
+      clearError();
+    };
+  }, [clearError]);
+
   const onSubmit = async (data: SignInFormData) => {
     try{
+      clearError(); // Clear previous errors
       await login(data.emailOrUsername, data.password);
-      navigate("/");
+      if (!error) navigate("/");
     } catch (e) {
-      // Handle login error (e.g., show a notification)
-      console.error("Login failed", e);
-      }
-
+    }
   }
+
+  const getErrorMessage = () => {
+    if (!error) return null;
+
+    const { message, errorCode, remainingAttempts, requiresEmailConfirmation } = error;
+
+    // Customize message based on error code
+    if (errorCode === "InvalidPassword" && remainingAttempts !== null && remainingAttempts !== undefined) {
+      return (
+        <div>
+          <p className="font-medium">{message}</p>
+          <p className="text-sm mt-1">Remaining attempts: {remainingAttempts}</p>
+        </div>
+      );
+    }
+
+    if (errorCode === "UserNotFound") {
+      return (
+        <div>
+          <p className="font-medium">{message}</p>
+          <p className="text-sm mt-1">Please check your credentials and try again.</p>
+        </div>
+      );
+    }
+
+    if (requiresEmailConfirmation) {
+      return (
+        <div>
+          <p className="font-medium">{message}</p>
+          <p className="text-sm mt-1">Please verify your email address before signing in.</p>
+        </div>
+      );
+    }
+
+    return <p className="font-medium">{message}</p>;
+  };
 
   return (
       <div className="w-full max-w-md p-8 space-y-6 bg-white dark:bg-zinc-800 rounded-lg">
@@ -53,6 +96,16 @@ export default function SignIn() {
         </Button>
         </div>
         <h2 className="text-2xl font-bold text-center text-zinc-900 dark:text-zinc-100">Sign In to Your Account</h2>
+        
+        {error && (
+          <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription>
+              {getErrorMessage()}
+            </AlertDescription>
+          </Alert>
+        )}
+
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
             <Label htmlFor="emailOrUsername" className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
@@ -63,6 +116,10 @@ export default function SignIn() {
               type="text"
               placeholder="Enter your email or username"
               {...register("emailOrUsername")}
+              onChange={(e) => {
+                register("emailOrUsername").onChange(e);
+                if (error) clearError();
+              }}
               className="mt-1"
             />
             {errors.emailOrUsername && (
@@ -77,6 +134,10 @@ export default function SignIn() {
               id="password"
               placeholder="Enter your password"
               {...register("password")}
+              onChange={(e) => {
+                register("password").onChange(e);
+                if (error) clearError();
+              }}
               className="mt-1"
             />
             {errors.password && (

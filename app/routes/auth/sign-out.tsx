@@ -30,7 +30,6 @@ export default function SignOut() {
       navigate("/");
       }
      catch (error) {
-      console.error("Error signing out:", error);
       setLoading(false);
       setError(true);
     }

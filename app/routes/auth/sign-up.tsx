@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { ArrowLeft, Loader2 } from "lucide-react";
+import { useAuth } from "~/features/auth/hooks";
 
 import { Button } from "~/features/shared/components/ui/button";
 import { Input } from "~/features/shared/components/ui/input";
@@ -14,6 +15,7 @@ import {
   usernameSchema, 
   nameSchema
 } from "~/features/auth/utils/validationSchemas";
+import { useEffect } from "react";
 
 const signUpSchema = z.object({
   name: nameSchema,
@@ -30,7 +32,14 @@ const signUpSchema = z.object({
 type SignUpFormData = z.infer<typeof signUpSchema>;
 
 export default function SignUp() {
+  const { register: authRegister, error, clearError } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    return () => {
+      clearError();
+    };
+  }, [clearError]);
 
   const {
     register,
@@ -41,16 +50,13 @@ export default function SignUp() {
   });
 
   const onSubmit = async (data: SignUpFormData) => {
-    // Handle sign-up logic here
-    console.log("Sign Up Data:", data);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    // Navigate to dashboard or home page after successful sign-up
-    navigate("/");
+    clearError();
+    await authRegister(data.name, data.surname, data.username, data.email, data.password, data.confirmPassword);
+    if(!error) navigate("/");
   }
 
   return (
-      <div className="w-full max-w-md p-8 space-y-6 bg-white dark:bg-zinc-800 rounded-lg">
+      <div className="w-full max-w-md p-8 space-y-6 bg-white dark:bg-black rounded-lg">
         <div className="text-center">
         <Button
           variant="ghost"
@@ -65,7 +71,7 @@ export default function SignUp() {
         <h2 className="text-2xl font-bold text-center text-zinc-900 dark:text-zinc-100">Create new account</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <Label htmlFor="name" className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
+            <Label htmlFor="name" className="text-sm font-medium text-black dark:text-zinc-300">
               Name
             </Label>
             <Input

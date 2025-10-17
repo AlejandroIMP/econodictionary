@@ -194,7 +194,6 @@ export const useTermsStore = create<TermsState>()(
               isLoading: false,
             });
           } catch (error) {
-            console.error('Fetch error:', error);
             set({
               error: error instanceof Error ? error.message : "Failed to fetch terms",
               isLoading: false,
@@ -237,7 +236,7 @@ export const useTermsStore = create<TermsState>()(
 
           try {
             // PUT /api/term/{id} - requires authentication + authorization (same author)
-            const updatedTerm = await authFetchJSON<Term>(`/api/term/${id}`, {
+            const updatedTerm = await authFetchJSON<Term>(`/api/term/my/${id}`, {
               method: 'PUT',
               credentials: "include",
               headers: {
@@ -250,6 +249,7 @@ export const useTermsStore = create<TermsState>()(
             get().updateTerm(id, updatedTerm);
             
             set({ isLoading: false });
+            console.log("Updated Term:", updatedTerm);
             return updatedTerm;
           } catch (error) {
             const errorMessage = error instanceof Error ? error.message : "Failed to update term";
