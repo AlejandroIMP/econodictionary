@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import type { Term, TermsFilters, CreateTermRequest } from "~/features/terms/types";
 import { authFetch, authFetchJSON } from "~/features/auth/utils";
-
+const isDev = import.meta.env.DEV;
 // API Response type for paginated endpoint
 interface PagedResponse {
   items: Term[];
@@ -158,7 +158,7 @@ export const useTermsStore = create<TermsState>()(
           set({ isLoading: true, error: null });
 
           try {
-            console.log("📥 Fetching terms with filters:", {
+            if (isDev) console.log("📥 Fetching terms with filters:", {
               page: state.currentPage,
               pageSize: state.pageSize,
               category: state.filters.category,
@@ -194,7 +194,7 @@ export const useTermsStore = create<TermsState>()(
               `/api/term/paged?${params.toString()}`
             );
 
-            console.log("✅ Terms fetched successfully:", {
+            if (isDev)console.log("✅ Terms fetched successfully:", {
               count: data.items.length,
               totalCount: data.totalCount,
               totalPages: data.totalPages,
@@ -226,7 +226,7 @@ export const useTermsStore = create<TermsState>()(
           set({ isLoading: true, error: null });
 
           try {
-            console.log("📤 Creating new term:", {
+            if (isDev)console.log("📤 Creating new term:", {
               name: data.name,
               category: data.category,
             });
@@ -241,7 +241,7 @@ export const useTermsStore = create<TermsState>()(
               body: JSON.stringify(data),
             });
 
-            console.log("✅ Term created successfully:", {
+            if (isDev)console.log("✅ Term created successfully:", {
               id: newTerm.id,
               name: newTerm.name,
               isApproved: newTerm.isApproved,
@@ -271,7 +271,7 @@ export const useTermsStore = create<TermsState>()(
           set({ isLoading: true, error: null });
 
           try {
-            console.log("📝 Updating term:", {
+            if (isDev)console.log("📝 Updating term:", {
               id,
               name: data.name,
               category: data.category,
@@ -287,7 +287,7 @@ export const useTermsStore = create<TermsState>()(
               body: JSON.stringify(data),
             });
 
-            console.log("✅ Term updated successfully:", {
+            if (isDev)console.log("✅ Term updated successfully:", {
               id: updatedTerm.id,
               name: updatedTerm.name,
               isApproved: updatedTerm.isApproved,
@@ -317,7 +317,7 @@ export const useTermsStore = create<TermsState>()(
           set({ isLoading: true, error: null });
 
           try {
-            console.log("🗑️ Deleting term:", id);
+            if (isDev)console.log("🗑️ Deleting term:", id);
 
             // DELETE /api/term/{id} - requires authentication + authorization
             // authFetch handles Authorization header and CSRF token automatically
@@ -325,7 +325,7 @@ export const useTermsStore = create<TermsState>()(
               method: 'DELETE',
             });
 
-            console.log("✅ Term deleted successfully:", id);
+            if (isDev)console.log("✅ Term deleted successfully:", id);
 
             // Remove from local state
             get().deleteTerm(id);
@@ -348,12 +348,12 @@ export const useTermsStore = create<TermsState>()(
         fetchCategories: async () => {
           set({ isLoading: true, error: null });
           try {
-            console.log("📥 Fetching categories");
+            if (isDev)console.log("📥 Fetching categories");
 
             // Fetch distinct categories from API
             const categories = await authFetchJSON<string[]>('/api/term/categories');
             
-            console.log("✅ Categories fetched successfully:", {
+            if (isDev)console.log("✅ Categories fetched successfully:", {
               count: categories.length,
               categories: categories.slice(0, 5), // Show first 5 for logging
             });

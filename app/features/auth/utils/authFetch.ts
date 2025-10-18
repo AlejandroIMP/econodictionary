@@ -99,7 +99,7 @@ export async function authFetch(
     return response;
   }
 
-  console.log("🔄 Got 401 - attempting token refresh...");
+  if (isDev) console.log("🔄 Got 401 - attempting token refresh...");
 
   // Got 401 - attempt token refresh (only one refresh at a time)
   if (!refreshingPromise) {
@@ -148,12 +148,12 @@ export async function authFetch(
 
   // If refresh failed, logout and return original 401
   if (!refreshSuccess) {
-    console.log("❌ Token refresh failed - logging out");
+    if (isDev)console.log("❌ Token refresh failed - logging out");
     await useAuthStore.getState().logout();
     return response;
   }
 
-  console.log("✅ Token refreshed - retrying original request");
+  if (isDev)console.log("✅ Token refreshed - retrying original request");
 
   // Retry original request with new access token
   try {

@@ -3,7 +3,7 @@ import { devtools, persist } from "zustand/middleware";
 import { getCSRFToken } from "../utils/cookies";
 
 const API_URL = import.meta.env.VITE_API_URL;
-
+const isDev = import.meta.env.DEV;
 interface User {
   userId: string;
   email: string;
@@ -40,7 +40,7 @@ interface AuthState {
   logout: () => Promise<void>;
   register: (name: string, surname: string, username: string, email: string, password: string, confirmPassword: string) => Promise<void>;
   refreshToken: () => Promise<boolean>;
-  resetPassword: (token: string, newPassword: string, confirmPassword: string) => Promise<void>;
+  resetPassword: (token: string, newPassword: string) => Promise<void>;
   requestPasswordReset: (email: string) => Promise<void>;
   clearError: () => void;
   initializeAuth: () => Promise<void>; // New: Initialize auth on app load
@@ -158,9 +158,11 @@ export const useAuthStore = create<AuthState>()(
             
             const decodedCsrf = csrfFromCookie ? decodeURIComponent(csrfFromCookie) : null;
             
-            console.log("✅ Login successful, checking cookies...");
-            console.log("📋 Cookies available:", document.cookie);
-            console.log("🛡️ CSRF Token:", decodedCsrf);
+            if (isDev){
+              console.log("✅ Login successful, checking cookies...");
+              console.log("📋 Cookies available:", document.cookie);
+              console.log("🛡️ CSRF Token:", decodedCsrf);
+            }
             
             // Server returns accessToken in body
             // refreshToken is set as HttpOnly cookie automatically
@@ -247,11 +249,11 @@ export const useAuthStore = create<AuthState>()(
             }
             
             if (!csrfToken) {
-              console.log("❌ No CSRF token - cannot refresh");
+              if (isDev)console.log("❌ No CSRF token - cannot refresh");
               return false;
             }
 
-            console.log("🔄 Attempting token refresh...");
+            if (isDev)console.log("🔄 Attempting token refresh...");
 
             const response = await fetch(`${API_URL}/api/auth/refresh-token`, {
               method: "POST",
@@ -262,13 +264,13 @@ export const useAuthStore = create<AuthState>()(
             });
 
             if (!response.ok) {
-              console.log(`❌ Token refresh failed: ${response.status} ${response.statusText}`);
+              if (isDev)console.log(`❌ Token refresh failed: ${response.status} ${response.statusText}`);
               return false;
             }
 
             const data = await response.json();
             
-            console.log("✅ Token refresh successful");
+            if (isDev)console.log("✅ Token refresh successful");
 
             // Update access token and optionally user data
             set({
@@ -392,16 +394,18 @@ export const useAuthStore = create<AuthState>()(
 
         // Initialize auth - Try to refresh token on app load if user was authenticated
         initializeAuth: async () => {
-          console.log("🔄 Initializing auth...");
+          if (isDev)console.log("🔄 Initializing auth...");
           
           const state = get();
           
           // 1. If we have stored tokens and user, we're good
           if (state.accessToken && state.csrfToken && state.user) {
-            console.log("✅ Session restored from storage");
-            console.log("👤 User:", state.user.username);
-            console.log("🔑 Access token present");
-            console.log("🛡️ CSRF token present");
+            if (isDev){
+              console.log("✅ Session restored from storage");
+              console.log("👤 User:", state.user.username);
+              console.log("🔑 Access token present");
+              console.log("🛡️ CSRF token present");
+            }
             return;
           }
           
@@ -414,12 +418,12 @@ export const useAuthStore = create<AuthState>()(
           if (csrfFromCookie) {
             const decodedCsrf = decodeURIComponent(csrfFromCookie);
             set({ csrfToken: decodedCsrf });
-            console.log("🛡️ CSRF token loaded from cookie:", decodedCsrf);
+            if (isDev)console.log("🛡️ CSRF token loaded from cookie:", decodedCsrf);
           }
           
           // 3. If we think user should be authenticated but we don't have an access token
           if (state.isAuthenticated && !state.accessToken) {
-            console.log("🔄 Attempting to restore session...");
+            if (isDev)console.log("🔄 Attempting to restore session...");
             
             // Wait a bit for cookies to be available (browser needs time to load them)
             await new Promise(resolve => setTimeout(resolve, 100));
@@ -427,7 +431,7 @@ export const useAuthStore = create<AuthState>()(
             const success = await get().refreshToken();
             
             if (!success) {
-              console.log("⚠️ Session restore failed - clearing auth state");
+              if (isDev)console.log("⚠️ Session restore failed - clearing auth state");
               set({
                 accessToken: null,
                 csrfToken: null,
@@ -435,10 +439,10 @@ export const useAuthStore = create<AuthState>()(
                 user: null,
               });
             } else {
-              console.log("✅ Session restored successfully");
+              if (isDev)console.log("✅ Session restored successfully");
             }
           } else if (!state.isAuthenticated) {
-            console.log("ℹ️ No active session found");
+            if (isDev)console.log("ℹ️ No active session found");
           }
         },
       }),
@@ -455,7 +459,7 @@ export const useAuthStore = create<AuthState>()(
         migrate: (persistedState: any, version: number) => {
           // Migration logic from older versions
           if (version === 0 || version === 1 || version === 2) {
-            console.log(`🔄 Migrating auth storage from v${version} to v3`);
+            if (isDev)console.log(`🔄 Migrating auth storage from v${version} to v3`);
             // Keep user and isAuthenticated if they exist, but clear tokens
             return {
               user: persistedState?.user || null,

@@ -3,6 +3,7 @@ import { devtools, persist } from "zustand/middleware";
 import type { Term } from "~/features/terms/types";
 import { authFetchJSON } from "~/features/auth/utils";
 
+const isDev = import.meta.env.DEV;
 interface TermsState {
   // Data
   term: Term | null;
@@ -45,13 +46,13 @@ export const useTermStore = create<TermsState>()(
           set({ isLoading: true, error: null });
 
           try {
-            console.log(`📥 Fetching term with ID: ${id}`);
+            if (isDev)console.log(`📥 Fetching term with ID: ${id}`);
             
             // Use authFetchJSON for consistency with other API calls
             // GET requests don't require CSRF token
             const data = await authFetchJSON<Term>(`/api/term/${id}`);
             
-            console.log("✅ Term fetched successfully:", data);
+            if (isDev)console.log("✅ Term fetched successfully:", data);
             set({ term: data, isLoading: false });
           } catch (error) {
             const errorMessage = error instanceof Error ? error.message : "Failed to fetch term";
