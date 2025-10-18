@@ -22,50 +22,50 @@ interface TeamMember {
 
 const teamMembers: TeamMember[] = [
   {
-    name: "Alejandro",
+    name: "David Alejandro Sian Sunuc",
     role: "Full-Stack Developer & Team Lead",
     bio: "Passionate about creating educational technology that makes complex subjects accessible. Leads the technical vision and ensures our platform delivers an exceptional user experience.",
     skills: ["React", "TypeScript", "Node.js", "System Design", "Team Leadership"],
     icon: Code,
     social: {
-      github: "https://github.com/alejandrotsx",
-      linkedin: "https://linkedin.com/in/alejandrotsx",
-      email: "alejandro@econodictionary.com"
+      github: "https://github.com/alejandroimp",
+      linkedin: "https://linkedin.com/in/alejandro-sunuc",
+      email: "dsians@miumg.edu.gt"
     }
   },
   {
-    name: "David",
-    role: "Backend Developer & Database Architect",
-    bio: "Specializes in building robust, scalable systems. Ensures our economic data is stored securely and retrieved efficiently, with a focus on performance and reliability.",
-    skills: ["Python", "PostgreSQL", "API Design", "Security", "DevOps"],
+    name: "Brian David Argueta Elel",
+    role: "IOs mobile developer",
+    bio: "Focused on developing seamless mobile experiences for iOS users. Committed to bringing economic education to users' fingertips through intuitive and engaging app design.",
+    skills: ["Swift", "iOS Development", "Mobile UX", "APIs"],
     icon: Users,
     social: {
-      github: "https://github.com/david-dev",
-      linkedin: "https://linkedin.com/in/david-dev",
-      email: "david@econodictionary.com"
+      github: "https://github.com/brian-argueta",
+      linkedin: "https://linkedin.com/in/brian-argueta-40287a29a",
+      email: "barguetae1@miumg.edu.gt"
     }
   },
   {
-    name: "Estuardo",
-    role: "Frontend Developer & UX Designer",
-    bio: "Combines technical expertise with design sensibility to create intuitive interfaces. Focuses on making economic concepts visually engaging and easy to understand.",
-    skills: ["React", "UI/UX Design", "CSS", "JavaScript", "User Research"],
+    name: "Estuardo Emanuel Feliciano Morales",
+    role: "Mobile Developer & UI/UX Designer",
+    bio: "Combines a keen eye for design with mobile development expertise to create intuitive and engaging user interfaces. Focuses on delivering a seamless experience across all devices.",
+    skills: ["Kotlin", "Android", "UI/UX Design", "Figma"],
     icon: Palette,
     social: {
       github: "https://github.com/estuardo-design",
       linkedin: "https://linkedin.com/in/estuardo-design",
-      email: "estuardo@econodictionary.com"
+      email: "efelicianom2@miumg.edu.gt"
     }
   },
   {
-    name: "Ricardo",
-    role: "Economics Expert & Content Strategist",
-    bio: "Brings deep knowledge of economics to ensure our content is accurate and pedagogically sound. Works with educators to develop learning pathways and assessment tools.",
-    skills: ["Economics", "Education", "Content Strategy", "Research", "Teaching"],
+    name: "Ricardo Antonio Noj Castro",
+    role: "Mobile Android Developer",
+    bio: "Dedicated to develop mobile solutions that bring economic education to users on the go. Focuses on performance and usability in mobile environments.",
+    skills: ["Kotlin", "Android Development", "Mobile UX", "APIs", "Performance Optimization"],
     icon: Coffee,
     social: {
       linkedin: "https://linkedin.com/in/ricardo-econ",
-      email: "ricardo@econodictionary.com"
+      email: "rnojc@miumg.edu.gt"
     }
   }
 ];

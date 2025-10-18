@@ -306,6 +306,7 @@ export const useAuthStore = create<AuthState>()(
               },
               body: JSON.stringify({ name, surname, username, email, password, confirmPassword }),
             });
+            
 
             if (!response.ok) {
               const errorData = await response.json().catch(() => ({ 
