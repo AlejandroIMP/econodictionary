@@ -74,6 +74,9 @@ export default function Team() {
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-zinc-900">
       <div className="container mx-auto px-4 py-12 sm:py-16 max-w-6xl">
+        <div className="mb-8">
+          <img src="../../Umg.png" alt="Umg Logo" className="mx-auto w-48" loading="lazy" />
+        </div>
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-4xl sm:text-5xl font-bold text-zinc-900 dark:text-zinc-50 mb-4">

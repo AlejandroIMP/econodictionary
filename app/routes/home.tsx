@@ -181,18 +181,20 @@ export default function Home() {
         
         <div className="relative container mx-auto px-4 py-20 sm:py-32">
           <div className="max-w-4xl mx-auto text-center">
+
+            <div className="mb-8">
+              <img src="./Umg.png" alt="Umg Logo" className="mx-auto w-48" loading="lazy" />
+            </div>
             {/* Badge animado */}
             <Badge className="hero-subtitle mb-6 bg-white/10 text-white border-white/20 hover:bg-white/20">
               <Star className="w-4 h-4 mr-1" />
               Diccionario Económico Profesional
             </Badge>
-
             {/* Título principal */}
             <h1 className="hero-title text-4xl sm:text-5xl lg:text-7xl font-bold mb-6 leading-tight text-white">
               Domina la Economía
               <span className="block text-blue-200">Término por Término</span>
             </h1>
-
             {/* Subtítulo */}
             <p className="hero-subtitle text-xl sm:text-2xl text-blue-100 mb-8 max-w-3xl mx-auto leading-relaxed">
               Aprende economía con definiciones claras, ejemplos prácticos. Tu compañero académico ideal.
