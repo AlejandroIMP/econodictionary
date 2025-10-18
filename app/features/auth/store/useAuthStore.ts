@@ -361,7 +361,7 @@ export const useAuthStore = create<AuthState>()(
           set({ isLoading: true, error: null });
 
           try {
-            const response = await fetch(`${API_URL}/api/auth/forgot-password`, {
+            const response = await fetch(`${API_URL}/api/auth/request-password-reset`, {
               method: "POST",
               credentials: "include",
               headers: {
