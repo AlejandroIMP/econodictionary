@@ -1,8 +1,7 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import type { Term } from "~/features/terms/types";
-
-const API_URL = import.meta.env.VITE_API_URL;
+import { authFetchJSON } from "~/features/auth/utils";
 
 interface TermsState {
   // Data
@@ -19,6 +18,7 @@ interface TermsState {
   setLoading: (isLoading: boolean) => void;
   setError: (error: string | null) => void;
   
+  // Fetch actions
   fetchTerm: (id: string) => Promise<void>;
 }
 
@@ -39,24 +39,29 @@ export const useTermStore = create<TermsState>()(
         setError: (error) => set({ error }),
 
         // Fetch a single term by ID
+        // GET /api/term/{id}
+        // No authentication required
         fetchTerm: async (id: string) => {
           set({ isLoading: true, error: null });
 
           try {
-            const response = await fetch(`${API_URL}/api/term/${id}`);
-            if (!response.ok) {
-              throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);
-            }
-
-            const data: Term = await response.json();
+            console.log(`📥 Fetching term with ID: ${id}`);
+            
+            // Use authFetchJSON for consistency with other API calls
+            // GET requests don't require CSRF token
+            const data = await authFetchJSON<Term>(`/api/term/${id}`);
+            
+            console.log("✅ Term fetched successfully:", data);
             set({ term: data, isLoading: false });
           } catch (error) {
-            set({ error: (error as Error).message, isLoading: false });
+            const errorMessage = error instanceof Error ? error.message : "Failed to fetch term";
+            console.error("❌ Error fetching term:", errorMessage);
+            set({ error: errorMessage, isLoading: false });
           }
         },
       }),
       {
-        name: "term-storage", // unique name
+        name: "term-storage",
       }
     )
   )

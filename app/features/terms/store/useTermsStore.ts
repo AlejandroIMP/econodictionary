@@ -151,11 +151,20 @@ export const useTermsStore = create<TermsState>()(
         setError: (error) => set({ error }),
 
         // Fetch action using the new /api/term/paged endpoint
+        // GET /api/term/paged with query parameters
+        // No authentication required
         fetchTerms: async () => {
           const state = get();
           set({ isLoading: true, error: null });
 
           try {
+            console.log("📥 Fetching terms with filters:", {
+              page: state.currentPage,
+              pageSize: state.pageSize,
+              category: state.filters.category,
+              search: state.filters.search,
+            });
+
             // Build query parameters for the paged endpoint
             const params = new URLSearchParams();
             
@@ -168,7 +177,7 @@ export const useTermsStore = create<TermsState>()(
               params.append('category', state.filters.category);
             }
             
-            // Search filter (now supported by API!)
+            // Search filter (supported by API with 'search' parameter)
             if (state.filters.search) {
               params.append('search', state.filters.search);
             }
@@ -177,13 +186,19 @@ export const useTermsStore = create<TermsState>()(
             params.append('orderBy', 'CreatedAt');
             params.append('orderDirection', 'desc');
             
-            // Only show approved terms (optional - remove this line to show all)
+            // Only show approved terms by default
             params.append('isApproved', 'true');
 
-            // Fetch terms using authFetch (handles auth + CSRF automatically)
+            // Fetch terms using authFetchJSON (handles auth + CSRF + retry automatically)
             const data = await authFetchJSON<PagedResponse>(
               `/api/term/paged?${params.toString()}`
             );
+
+            console.log("✅ Terms fetched successfully:", {
+              count: data.items.length,
+              totalCount: data.totalCount,
+              totalPages: data.totalPages,
+            });
 
             // Update state with the API response
             set({
@@ -194,26 +209,43 @@ export const useTermsStore = create<TermsState>()(
               isLoading: false,
             });
           } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : "Failed to fetch terms";
+            console.error("❌ Error fetching terms:", errorMessage);
             set({
-              error: error instanceof Error ? error.message : "Failed to fetch terms",
+              error: errorMessage,
               isLoading: false,
             });
           }
         },
 
         // CRUD Operations
+        // POST /api/term
+        // Creates a new term - requires authentication
+        // Moderación: Before creating, moderation service runs and can approve, request review, or reject
         createTerm: async (data: CreateTermRequest) => {
           set({ isLoading: true, error: null });
 
           try {
+            console.log("📤 Creating new term:", {
+              name: data.name,
+              category: data.category,
+            });
+
             // POST /api/term - requires authentication
+            // authFetchJSON handles Authorization header and CSRF token automatically
             const newTerm = await authFetchJSON<Term>('/api/term', {
               method: 'POST',
-              credentials: "include",
               headers: {
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify(data),
+            });
+
+            console.log("✅ Term created successfully:", {
+              id: newTerm.id,
+              name: newTerm.name,
+              isApproved: newTerm.isApproved,
+              rejectionReason: newTerm.rejectionReason,
             });
 
             // Add to local state (prepend to list)
@@ -223,6 +255,7 @@ export const useTermsStore = create<TermsState>()(
             return newTerm;
           } catch (error) {
             const errorMessage = error instanceof Error ? error.message : "Failed to create term";
+            console.error("❌ Error creating term:", errorMessage);
             set({
               error: errorMessage,
               isLoading: false,
@@ -231,28 +264,44 @@ export const useTermsStore = create<TermsState>()(
           }
         },
 
+        // PUT /api/term/my/{id}
+        // Updates own term - requires authentication, only author can edit
+        // Applies automatic moderation on content changes
         editTerm: async (id: string, data: Partial<CreateTermRequest>) => {
           set({ isLoading: true, error: null });
 
           try {
-            // PUT /api/term/{id} - requires authentication + authorization (same author)
+            console.log("📝 Updating term:", {
+              id,
+              name: data.name,
+              category: data.category,
+            });
+
+            // PUT /api/term/my/{id} - Use this endpoint for authors to update their own terms
+            // Moderation will be applied to the updated content
             const updatedTerm = await authFetchJSON<Term>(`/api/term/my/${id}`, {
               method: 'PUT',
-              credentials: "include",
               headers: {
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify(data),
             });
 
+            console.log("✅ Term updated successfully:", {
+              id: updatedTerm.id,
+              name: updatedTerm.name,
+              isApproved: updatedTerm.isApproved,
+              rejectionReason: updatedTerm.rejectionReason,
+            });
+
             // Update in local state
             get().updateTerm(id, updatedTerm);
             
             set({ isLoading: false });
-            console.log("Updated Term:", updatedTerm);
             return updatedTerm;
           } catch (error) {
             const errorMessage = error instanceof Error ? error.message : "Failed to update term";
+            console.error("❌ Error updating term:", errorMessage);
             set({
               error: errorMessage,
               isLoading: false,
@@ -261,15 +310,22 @@ export const useTermsStore = create<TermsState>()(
           }
         },
 
+        // DELETE /api/term/{id}
+        // Deletes a term - requires authentication
+        // Only author or admin/moderator can delete
         removeTerm: async (id: string) => {
           set({ isLoading: true, error: null });
 
           try {
-            // DELETE /api/term/{id} - requires authentication + authorization (same author)
+            console.log("🗑️ Deleting term:", id);
+
+            // DELETE /api/term/{id} - requires authentication + authorization
+            // authFetch handles Authorization header and CSRF token automatically
             await authFetch(`/api/term/${id}`, {
-              credentials: "include",
               method: 'DELETE',
             });
+
+            console.log("✅ Term deleted successfully:", id);
 
             // Remove from local state
             get().deleteTerm(id);
@@ -277,6 +333,7 @@ export const useTermsStore = create<TermsState>()(
             set({ isLoading: false });
           } catch (error) {
             const errorMessage = error instanceof Error ? error.message : "Failed to delete term";
+            console.error("❌ Error deleting term:", errorMessage);
             set({
               error: errorMessage,
               isLoading: false,
@@ -285,14 +342,26 @@ export const useTermsStore = create<TermsState>()(
           }
         },
 
+        // GET /api/term/categories
+        // Fetches list of distinct categories
+        // No authentication required
         fetchCategories: async () => {
           set({ isLoading: true, error: null });
           try {
+            console.log("📥 Fetching categories");
+
             // Fetch distinct categories from API
             const categories = await authFetchJSON<string[]>('/api/term/categories');
+            
+            console.log("✅ Categories fetched successfully:", {
+              count: categories.length,
+              categories: categories.slice(0, 5), // Show first 5 for logging
+            });
+
             set({ categories, isLoading: false });
           } catch (error) {
             const errorMessage = error instanceof Error ? error.message : "Failed to fetch categories";
+            console.error("❌ Error fetching categories:", errorMessage);
             set({ error: errorMessage, isLoading: false });
           }
         }

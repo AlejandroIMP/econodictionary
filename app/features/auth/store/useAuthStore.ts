@@ -32,6 +32,7 @@ interface AuthState {
   csrfToken: string | null; // CSRF token from cookie, persisted
 
   // Actions
+  getUserData: () => Promise<void>;
   setUser: (user: User | null) => void;
   setAccessToken: (token: string | null) => void;
   setCsrfToken: (token: string | null) => void;
@@ -73,6 +74,49 @@ export const useAuthStore = create<AuthState>()(
           set({
             csrfToken: token,
           }),
+
+        getUserData: async () => {
+          set({ isLoading: true, error: null });
+          
+          try {
+            const csrfToken = get().csrfToken || getCSRFToken();
+            const response = await fetch(`${API_URL}/api/auth/me`, {
+              method: "GET",
+              credentials: "include",
+              headers: csrfToken ? {
+                "X-CSRF-TOKEN": csrfToken,
+              } : {},
+            });
+
+            if (!response.ok) {
+              throw new Error(`Failed to fetch user data: ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            const user: User = {
+              userId: data.userId || data.id,
+              email: data.email,
+              username: data.username,
+              name: data.name,
+              surname: data.surname,
+              avatar: data.avatar,
+              requiresEmailConfirmation: data.requiresEmailConfirmation || false
+            };
+
+            set({
+              user,
+              isAuthenticated: true,
+              isLoading: false,
+            });
+          } catch (error) {
+            set({
+              error: {
+                message: error instanceof Error ? error.message : "Failed to fetch user data",
+              },
+              isLoading: false,
+            });
+          }
+        },
 
         login: async (email, password) => {
           set({ isLoading: true, error: null });

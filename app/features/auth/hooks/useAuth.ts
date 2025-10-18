@@ -17,6 +17,7 @@ export function useAuth() {
     clearError,
     initializeAuth,
     setCsrfToken,
+    getUserData,
   } = useAuthStore();
 
   return {
@@ -35,5 +36,6 @@ export function useAuth() {
     clearError,
     initializeAuth,
     setCsrfToken,
+    getUserData,
   };
 }
