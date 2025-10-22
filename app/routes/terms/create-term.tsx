@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { useState } from "react";
+import type { Route } from "./+types/create-term";
 import {
   Card,
   CardHeader,
@@ -18,6 +19,39 @@ import { Textarea } from "~/features/shared/components/ui/textarea";
 import { Label } from "~/features/shared/components/ui/label";
 import { Select } from "~/features/shared/components/ui/select";
 import { ImageUpload } from "~/features/terms/components";
+
+export function meta({}: Route.MetaArgs) {
+  const baseUrl = "https://econodictionary.com";
+  return [
+    { 
+      title: "Crear Nuevo Término - Diccionario Económico" 
+    },
+    { 
+      name: "description", 
+      content: "Agrega tu propio término económico al diccionario colaborativo. Comparte definiciones, ejemplos e imágenes para enriquecer el conocimiento financiero comunitario." 
+    },
+    { 
+      property: "og:title", 
+      content: "Contribuir al Diccionario - Crear Término Económico" 
+    },
+    { 
+      property: "og:description", 
+      content: "Suma tus conocimientos al diccionario económico colaborativo." 
+    },
+    { 
+      property: "og:type", 
+      content: "website" 
+    },
+    { 
+      property: "og:url", 
+      content: `${baseUrl}/terms/create` 
+    },
+    { 
+      name: "robots", 
+      content: "noindex, follow" 
+    },
+  ];
+}
 import { useTermsStore } from "~/features/terms/store/useTermsStore";
 import { useAuthStore } from "~/features/auth/store/useAuthStore";
 import { useCategories } from "~/features/terms/hooks";
@@ -29,17 +63,17 @@ import { useEffect } from "react";
 const createTermSchema = z.object({
   name: z
     .string()
-    .min(2, "Name must be at least 2 characters")
-    .max(100, "Name must be less than 100 characters"),
+    .min(2, "El nombre debe tener al menos 2 caracteres")
+    .max(100, "El nombre debe tener menos de 100 caracteres"),
   definition: z
     .string()
-    .min(10, "Definition must be at least 10 characters")
-    .max(1000, "Definition must be less than 1000 characters"),
-  category: z.string().min(1, "Please select a category"),
+    .min(10, "La definición debe tener al menos 10 caracteres")
+    .max(1000, "La definición debe tener menos de 1000 caracteres"),
+  category: z.string().min(1, "Por favor selecciona una categoría"),
   example: z
     .string()
-    .min(10, "Example must be at least 10 characters")
-    .max(500, "Example must be less than 500 characters"),
+    .min(10, "El ejemplo debe tener al menos 10 caracteres")
+    .max(500, "El ejemplo debe tener menos de 500 caracteres"),
 });
 
 type CreateTermFormData = z.infer<typeof createTermSchema>;
@@ -64,7 +98,7 @@ export default function CreateTerm() {
 
   // Create categories options (remove "All Categories" and add empty option)
   const categoryOptions = [
-    { value: "", label: "Select a category" },
+    { value: "", label: "Selecciona una categoría" },
     ...categories
       .filter(cat => cat !== "All Categories")
       .map(cat => ({ value: cat, label: cat }))
@@ -140,15 +174,15 @@ export default function CreateTerm() {
           className="mb-6"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Terms
+          Volver a Términos
         </Button>
 
         {/* Form Card */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-2xl sm:text-3xl">Create New Term</CardTitle>
+            <CardTitle className="text-2xl sm:text-3xl">Crear Nuevo Término</CardTitle>
             <CardDescription className="text-base">
-              Add a new economic term to the dictionary. All fields marked with * are required.
+              Agrega un nuevo término económico al diccionario. Todos los campos marcados con * son requeridos.
             </CardDescription>
           </CardHeader>
 
@@ -157,11 +191,11 @@ export default function CreateTerm() {
               {/* Name Field */}
               <div className="space-y-2">
                 <Label htmlFor="name">
-                  Term Name <span className="text-red-500">*</span>
+                  Nombre del Término <span className="text-red-500">*</span>
                 </Label>
                 <Input
                   id="name"
-                  placeholder="e.g., Inflation"
+                  placeholder="p.ej., Inflación"
                   {...register("name")}
                   aria-invalid={errors.name ? "true" : "false"}
                 />
@@ -175,7 +209,7 @@ export default function CreateTerm() {
               {/* Category Field */}
               <div className="space-y-2">
                 <Label htmlFor="category">
-                  Category <span className="text-red-500">*</span>
+                  Categoría <span className="text-red-500">*</span>
                 </Label>
                 <Select
                   id="category"
@@ -199,11 +233,11 @@ export default function CreateTerm() {
               {/* Definition Field */}
               <div className="space-y-2">
                 <Label htmlFor="definition">
-                  Definition <span className="text-red-500">*</span>
+                  Definición <span className="text-red-500">*</span>
                 </Label>
                 <Textarea
                   id="definition"
-                  placeholder="Provide a clear and concise definition..."
+                  placeholder="Proporciona una definición clara y concisa..."
                   rows={5}
                   {...register("definition")}
                   aria-invalid={errors.definition ? "true" : "false"}
@@ -218,11 +252,11 @@ export default function CreateTerm() {
               {/* Example Field */}
               <div className="space-y-2">
                 <Label htmlFor="example">
-                  Example <span className="text-red-500">*</span>
+                  Ejemplo <span className="text-red-500">*</span>
                 </Label>
                 <Textarea
                   id="example"
-                  placeholder="Provide a practical example to illustrate the term..."
+                  placeholder="Proporciona un ejemplo práctico para ilustrar el término..."
                   rows={4}
                   {...register("example")}
                   aria-invalid={errors.example ? "true" : "false"}
@@ -237,7 +271,7 @@ export default function CreateTerm() {
               {/* Optional Fields */}
               <div className="space-y-4 rounded-lg border border-zinc-200 bg-zinc-50 p-4 dark:border-zinc-800 dark:bg-zinc-900">
                 <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">
-                  Optional Media
+                  Multimedia Opcional
                 </h3>
 
                 <ImageUpload 
@@ -255,7 +289,7 @@ export default function CreateTerm() {
                 className="w-full sm:w-auto"
                 disabled={isSubmitting || isUploading}
               >
-                Cancel
+                Cancelar
               </Button>
               <Button
                 type="submit"
@@ -265,10 +299,10 @@ export default function CreateTerm() {
                 {isSubmitting || isUploading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    {isUploading ? "Uploading..." : "Creating..."}
+                    {isUploading ? "Cargando..." : "Creando..."}
                   </>
                 ) : (
-                  "Create Term"
+                  "Crear Término"
                 )}
               </Button>
             </CardFooter>

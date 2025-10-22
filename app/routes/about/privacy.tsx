@@ -15,13 +15,13 @@ export default function Privacy() {
         <div className="text-center mb-12">
           <Shield className="h-16 w-16 text-blue-600 mx-auto mb-4" />
           <h1 className="text-4xl sm:text-5xl font-bold text-zinc-900 dark:text-zinc-50 mb-4">
-            Privacy Policy
+            Política de Privacidad
           </h1>
           <p className="text-xl text-zinc-600 dark:text-zinc-400 max-w-3xl mx-auto">
-            Your privacy is important to us. This policy explains how we collect, use, and protect your information.
+            Tu privacidad es importante para nosotros. Esta política explica cómo recopilamos, utilizamos y protegemos tu información.
           </p>
           <p className="text-sm text-zinc-500 dark:text-zinc-500 mt-4">
-            Last updated: October 10, 2025
+            Última actualización: 10 de Octubre de 2025
           </p>
         </div>
 
@@ -30,14 +30,14 @@ export default function Privacy() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Eye className="h-5 w-5" />
-              Privacy Overview
+              Resumen de Privacidad
             </CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
-              Econodictionary is committed to protecting your privacy. We collect only the minimum information
-              necessary to provide our services and are transparent about our practices. This privacy policy
-              explains what information we collect and how we use it.
+              Econodictionary está comprometida a proteger tu privacidad. Recopilamos solo la información mínima
+              necesaria para proporcionar nuestros servicios y somos transparentes sobre nuestras prácticas. Esta política
+              de privacidad explica qué información recopilamos y cómo la utilizamos.
             </p>
           </CardContent>
         </Card>
@@ -47,42 +47,42 @@ export default function Privacy() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Lock className="h-5 w-5" />
-              Information We Collect
+              Información Que Recopilamos
             </CardTitle>
             <CardDescription>
-              We collect information in the following ways:
+              Recopilamos información de las siguientes maneras:
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             <div>
-              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Account Information</h4>
+              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Información de Cuenta</h4>
               <p className="text-zinc-600 dark:text-zinc-400">
-                When you create an account, we collect your email address, username, and password.
-                Passwords are encrypted using industry-standard hashing algorithms.
+                Cuando creas una cuenta, recopilamos tu correo electrónico, nombre de usuario y contraseña.
+                Las contraseñas se cifran usando algoritmos de hash estándar de la industria.
               </p>
             </div>
 
             <div>
-              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Usage Data</h4>
+              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Datos de Uso</h4>
               <p className="text-zinc-600 dark:text-zinc-400">
-                We automatically collect information about how you use our platform, including pages visited,
-                search terms, and interaction patterns. This helps us improve our services.
+                Recopilamos automáticamente información sobre cómo usas nuestra plataforma, incluidas páginas visitadas,
+                términos de búsqueda y patrones de interacción. Esto nos ayuda a mejorar nuestros servicios.
               </p>
             </div>
 
             <div>
-              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Content You Create</h4>
+              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Contenido Que Creas</h4>
               <p className="text-zinc-600 dark:text-zinc-400">
-                When you contribute content (terms, definitions, examples), we store that information
-                along with your username and contribution history.
+                Cuando contribuyes contenido (términos, definiciones, ejemplos), almacenamos esa información
+                junto con tu nombre de usuario e historial de contribuciones.
               </p>
             </div>
 
             <div>
-              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Technical Information</h4>
+              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Información Técnica</h4>
               <p className="text-zinc-600 dark:text-zinc-400">
-                We collect standard web analytics data including IP addresses, browser type, device information,
-                and referral sources. This data is anonymized where possible.
+                Recopilamos datos estándar de análisis web, incluidas direcciones IP, tipo de navegador, información del dispositivo
+                y fuentes de referencia. Estos datos se anonimiza donde es posible.
               </p>
             </div>
           </CardContent>
@@ -93,34 +93,34 @@ export default function Privacy() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Users className="h-5 w-5" />
-              How We Use Your Information
+              Cómo Utilizamos Tu Información
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <ul className="space-y-3 text-zinc-600 dark:text-zinc-400">
               <li className="flex items-start gap-2">
                 <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div>
-                <span>Provide and maintain our platform services</span>
+                <span>Proporcionar y mantener nuestros servicios de plataforma</span>
               </li>
               <li className="flex items-start gap-2">
                 <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div>
-                <span>Authenticate your account and secure your data</span>
+                <span>Autenticar tu cuenta y asegurar tus datos</span>
               </li>
               <li className="flex items-start gap-2">
                 <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div>
-                <span>Process and display content contributions</span>
+                <span>Procesar y mostrar contribuciones de contenido</span>
               </li>
               <li className="flex items-start gap-2">
                 <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div>
-                <span>Improve platform functionality and user experience</span>
+                <span>Mejorar la funcionalidad de la plataforma y la experiencia del usuario</span>
               </li>
               <li className="flex items-start gap-2">
                 <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div>
-                <span>Communicate with you about your account and our services</span>
+                <span>Comunicarnos contigo sobre tu cuenta y nuestros servicios</span>
               </li>
               <li className="flex items-start gap-2">
                 <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div>
-                <span>Ensure platform security and prevent abuse</span>
+                <span>Garantizar la seguridad de la plataforma y prevenir abusos</span>
               </li>
             </ul>
           </CardContent>
@@ -129,27 +129,27 @@ export default function Privacy() {
         {/* Information Sharing */}
         <Card className="mb-8">
           <CardHeader>
-            <CardTitle>Information Sharing and Disclosure</CardTitle>
+            <CardTitle>Compartir Información y Divulgación</CardTitle>
             <CardDescription>
-              We do not sell, trade, or rent your personal information to third parties.
+              No vendemos, intercambiamos ni alquilamos tu información personal a terceros.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">We May Share Information:</h4>
+              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Podemos Compartir Información:</h4>
               <ul className="space-y-2 text-zinc-600 dark:text-zinc-400 ml-4">
-                <li>• With your explicit consent</li>
-                <li>• To comply with legal obligations</li>
-                <li>• To protect our rights and prevent harm</li>
-                <li>• In connection with a business transfer</li>
+                <li>• Con tu consentimiento explícito</li>
+                <li>• Para cumplir con obligaciones legales</li>
+                <li>• Para proteger nuestros derechos y prevenir daños</li>
+                <li>• En conexión con una transferencia de negocio</li>
               </ul>
             </div>
 
             <div>
-              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Public Content:</h4>
+              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Contenido Público:</h4>
               <p className="text-zinc-600 dark:text-zinc-400">
-                Content you contribute to the platform (terms, definitions, examples) is publicly visible
-                and may be viewed, shared, and used by others in accordance with our Terms of Service.
+                El contenido que contribuyes a la plataforma (términos, definiciones, ejemplos) es visible públicamente
+                y puede ser visto, compartido y utilizado por otros de acuerdo con nuestros Términos de Servicio.
               </p>
             </div>
           </CardContent>
@@ -158,35 +158,35 @@ export default function Privacy() {
         {/* Data Security */}
         <Card className="mb-8">
           <CardHeader>
-            <CardTitle>Data Security</CardTitle>
+            <CardTitle>Seguridad de Datos</CardTitle>
             <CardDescription>
-              We implement appropriate technical and organizational measures to protect your data.
+              Implementamos medidas técnicas y organizacionales apropiadas para proteger tus datos.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <h4 className="font-semibold text-zinc-900 dark:text-zinc-50">Encryption</h4>
+                <h4 className="font-semibold text-zinc-900 dark:text-zinc-50">Encriptación</h4>
                 <p className="text-sm text-zinc-600 dark:text-zinc-400">
-                  Data is encrypted in transit and at rest using industry-standard protocols.
+                  Los datos se encriptan en tránsito y en reposo utilizando protocolos estándar de la industria.
                 </p>
               </div>
               <div className="space-y-2">
-                <h4 className="font-semibold text-zinc-900 dark:text-zinc-50">Access Controls</h4>
+                <h4 className="font-semibold text-zinc-900 dark:text-zinc-50">Controles de Acceso</h4>
                 <p className="text-sm text-zinc-600 dark:text-zinc-400">
-                  Strict access controls limit who can view or modify your data.
+                  Los controles de acceso estrictos limitan quién puede ver o modificar tus datos.
                 </p>
               </div>
               <div className="space-y-2">
-                <h4 className="font-semibold text-zinc-900 dark:text-zinc-50">Regular Audits</h4>
+                <h4 className="font-semibold text-zinc-900 dark:text-zinc-50">Auditorías Regulares</h4>
                 <p className="text-sm text-zinc-600 dark:text-zinc-400">
-                  We conduct regular security audits and vulnerability assessments.
+                  Realizamos auditorías de seguridad regulares y evaluaciones de vulnerabilidades.
                 </p>
               </div>
               <div className="space-y-2">
-                <h4 className="font-semibold text-zinc-900 dark:text-zinc-50">Incident Response</h4>
+                <h4 className="font-semibold text-zinc-900 dark:text-zinc-50">Respuesta a Incidentes</h4>
                 <p className="text-sm text-zinc-600 dark:text-zinc-400">
-                  We have procedures in place to respond to security incidents.
+                  Tenemos procedimientos en lugar para responder a incidentes de seguridad.
                 </p>
               </div>
             </div>
@@ -196,35 +196,35 @@ export default function Privacy() {
         {/* Your Rights */}
         <Card className="mb-8">
           <CardHeader>
-            <CardTitle>Your Rights and Choices</CardTitle>
+            <CardTitle>Tus Derechos y Opciones</CardTitle>
             <CardDescription>
-              You have control over your data and how it's used.
+              Tienes control sobre tus datos y cómo se usan.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid md:grid-cols-2 gap-6">
               <div>
-                <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Access and Portability</h4>
+                <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Acceso y Portabilidad</h4>
                 <p className="text-sm text-zinc-600 dark:text-zinc-400">
-                  You can request a copy of your personal data and have it transferred to another service.
+                  Puedes solicitar una copia de tus datos personales y transferirlos a otro servicio.
                 </p>
               </div>
               <div>
-                <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Correction</h4>
+                <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Corrección</h4>
                 <p className="text-sm text-zinc-600 dark:text-zinc-400">
-                  You can update your account information and correct inaccurate data.
+                  Puedes actualizar la información de tu cuenta y corregir datos inexactos.
                 </p>
               </div>
               <div>
-                <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Deletion</h4>
+                <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Eliminación</h4>
                 <p className="text-sm text-zinc-600 dark:text-zinc-400">
-                  You can request deletion of your account and associated data.
+                  Puedes solicitar la eliminación de tu cuenta y datos asociados.
                 </p>
               </div>
               <div>
-                <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Consent Withdrawal</h4>
+                <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Retiro de Consentimiento</h4>
                 <p className="text-sm text-zinc-600 dark:text-zinc-400">
-                  You can withdraw consent for data processing where applicable.
+                  Puedes retirar el consentimiento para el procesamiento de datos cuando corresponda.
                 </p>
               </div>
             </div>
@@ -234,29 +234,29 @@ export default function Privacy() {
         {/* Cookies and Tracking */}
         <Card className="mb-8">
           <CardHeader>
-            <CardTitle>Cookies and Tracking</CardTitle>
+            <CardTitle>Cookies y Seguimiento</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <p className="text-zinc-600 dark:text-zinc-400">
-              We use cookies and similar technologies to enhance your experience and analyze usage patterns.
+              Utilizamos cookies y tecnologías similares para mejorar tu experiencia y analizar patrones de uso.
             </p>
 
             <div>
-              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Essential Cookies</h4>
+              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Cookies Esenciales</h4>
               <p className="text-sm text-zinc-600 dark:text-zinc-400">
-                Required for basic platform functionality, including authentication and security.
+                Requeridas para la funcionalidad básica de la plataforma, incluyendo autenticación y seguridad.
               </p>
             </div>
 
             <div>
-              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Analytics Cookies</h4>
+              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Cookies de Análisis</h4>
               <p className="text-sm text-zinc-600 dark:text-zinc-400">
-                Help us understand how users interact with our platform to improve services.
+                Nos ayudan a entender cómo los usuarios interactúan con nuestra plataforma para mejorar los servicios.
               </p>
             </div>
 
             <p className="text-sm text-zinc-600 dark:text-zinc-400">
-              You can control cookie preferences through your browser settings.
+              Puedes controlar las preferencias de cookies a través de la configuración de tu navegador.
             </p>
           </CardContent>
         </Card>
@@ -266,20 +266,20 @@ export default function Privacy() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Mail className="h-5 w-5" />
-              Contact Us About Privacy
+              Contáctanos Sobre Privacidad
             </CardTitle>
             <CardDescription>
-              Questions about this privacy policy or your data?
+              ¿Preguntas sobre esta política de privacidad o tus datos?
             </CardDescription>
           </CardHeader>
           <CardContent>
             <p className="text-zinc-600 dark:text-zinc-400 mb-4">
-              If you have questions about this privacy policy or how we handle your data,
-              please contact us:
+              Si tienes preguntas sobre esta política de privacidad o cómo manejamos tus datos,
+              por favor contáctanos:
             </p>
             <div className="space-y-2 text-zinc-600 dark:text-zinc-400">
-              <p><strong>Email:</strong> privacy@econodictionary.com</p>
-              <p><strong>Response Time:</strong> Within 30 days</p>
+              <p><strong>Correo Electrónico:</strong> privacy@econodictionary.com</p>
+              <p><strong>Tiempo de Respuesta:</strong> Dentro de 30 días</p>
             </div>
           </CardContent>
         </Card>
@@ -287,15 +287,15 @@ export default function Privacy() {
         {/* Changes to Policy */}
         <Card>
           <CardHeader>
-            <CardTitle>Changes to This Policy</CardTitle>
+            <CardTitle>Cambios a Esta Política</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-zinc-600 dark:text-zinc-400 mb-4">
-              We may update this privacy policy from time to time. When we make significant changes,
-              we'll notify you through the platform or via email.
+              Podemos actualizar esta política de privacidad de vez en cuando. Cuando realizamos cambios significativos,
+              te lo notificaremos a través de la plataforma o por correo electrónico.
             </p>
             <p className="text-sm text-zinc-500 dark:text-zinc-500">
-              This policy was last updated on October 10, 2025. We encourage you to review it periodically.
+              Esta política fue actualizada por última vez el 10 de Octubre de 2025. Te animamos a revisarla periódicamente.
             </p>
           </CardContent>
         </Card>

@@ -9,9 +9,43 @@ import {
 } from "~/features/shared/components/ui/card";
 import { Badge } from "~/features/shared/components/ui/badge";
 import { Button } from "~/features/shared/components/ui/button";
+import type { Route } from "./+types/term";
 import { useTerm } from "~/features/terms/hooks/useTerm";
 import { useTermsStore } from "~/features/terms/store/useTermsStore";
 import { useAuthStore } from "~/features/auth/store/useAuthStore";
+
+export function meta({ params }: Route.MetaArgs) {
+  // Note: En SSR, esta función se ejecuta en el servidor antes de cargar los datos
+  // Para metadatos dinámicos completos, considere usar un loader
+  const termId = params.term;
+  const baseUrl = "https://econodictionary.com";
+  
+  return [
+    { 
+      title: `Término Económico - Diccionario EconoDictionary` 
+    },
+    { 
+      name: "description", 
+      content: "Explora este término económico en nuestro diccionario con definiciones claras, ejemplos prácticos y contexto financiero." 
+    },
+    { 
+      property: "og:type", 
+      content: "article" 
+    },
+    { 
+      property: "og:url", 
+      content: `${baseUrl}/terms/${termId}` 
+    },
+    { 
+      name: "twitter:card", 
+      content: "summary" 
+    },
+    { 
+      name: "robots", 
+      content: "index, follow" 
+    },
+  ];
+}
 
 
 export default function TermDetail() {
@@ -34,7 +68,7 @@ export default function TermDetail() {
     if (!term) return;
     
     const confirmed = window.confirm(
-      `Are you sure you want to delete "${term.name}"? This action cannot be undone.`
+      `¿Estás seguro de que deseas eliminar "${term.name}"? Esta acción no se puede deshacer.`
     );
     
     if (!confirmed) return;
@@ -44,7 +78,7 @@ export default function TermDetail() {
       await removeTerm(term.id);
       navigate("/terms");
     } catch (error) {
-      alert("Failed to delete term. Please try again.");
+      alert("Error al eliminar el término. Por favor, intenta nuevamente.");
     } finally {
       setIsDeleting(false);
     }
@@ -80,7 +114,7 @@ export default function TermDetail() {
           <Link to="/terms" className="inline-block">
             <Button variant="outline" size="sm">
               <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Terms
+              Volver a Términos
             </Button>
           </Link>
         </div>
@@ -92,11 +126,11 @@ export default function TermDetail() {
     return (
       <div className="min-h-screen bg-zinc-50 dark:bg-zinc-900 flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">Term not found</h2>
+          <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">Término no encontrado</h2>
           <Link to="/terms" className="mt-4 inline-block">
             <Button variant="outline">
               <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Terms
+              Volver a Términos
             </Button>
           </Link>
         </div>
@@ -108,13 +142,13 @@ export default function TermDetail() {
   const StatusIcon = term.isApproved ? CheckCircle : Clock;
 
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-900">
+    <article className="min-h-screen bg-zinc-50 dark:bg-zinc-900">
       <div className="container mx-auto px-4 py-6 sm:py-8 max-w-4xl">
         {/* Back Button */}
         <Link to="/terms" className="mb-6 inline-block">
           <Button variant="ghost" size="sm">
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Terms
+            Volver a Términos
           </Button>
         </Link>
 
@@ -123,13 +157,13 @@ export default function TermDetail() {
           <CardHeader className="space-y-4">
             {/* Title and Status */}
             <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-              <CardTitle className="text-2xl sm:text-3xl lg:text-4xl">
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold">
                 {term.name}
-              </CardTitle>
+              </h1>
               <div className="flex flex-wrap items-center gap-2">
                 <Badge variant={statusVariant} className="w-fit">
                   <StatusIcon className="mr-1 h-3 w-3" />
-                  {term.isApproved ? "Approved" : "Pending"}
+                  {term.isApproved ? "Aprobado" : "Pendiente"}
                 </Badge>
                 
                 {/* Edit and Delete buttons - only show if user is the author */}
@@ -138,7 +172,7 @@ export default function TermDetail() {
                     <Link to={`/terms/${term.id}/edit`}>
                       <Button variant="outline" size="sm">
                         <Edit className="mr-1 h-4 w-4" />
-                        Edit
+                        Editar
                       </Button>
                     </Link>
                     <Button 
@@ -148,7 +182,7 @@ export default function TermDetail() {
                       disabled={isDeleting}
                     >
                       <Trash2 className="mr-1 h-4 w-4" />
-                      {isDeleting ? "Deleting..." : "Delete"}
+                      {isDeleting ? "Eliminando..." : "Eliminar"}
                     </Button>
                   </div>
                 )}
@@ -167,7 +201,7 @@ export default function TermDetail() {
               <div className="flex items-center gap-1">
                 <Calendar className="h-4 w-4" />
                 <span>
-                  Created {new Date(term.createdAt).toLocaleDateString("en-US", {
+                  Creado {new Date(term.createdAt).toLocaleDateString("es-ES", {
                     month: "long",
                     day: "numeric",
                     year: "numeric",
@@ -178,7 +212,7 @@ export default function TermDetail() {
                 <div className="flex items-center gap-1">
                   <Clock className="h-4 w-4" />
                   <span>
-                    Updated {new Date(term.updatedAt).toLocaleDateString("en-US", {
+                    Actualizado {new Date(term.updatedAt).toLocaleDateString("es-ES", {
                       month: "long",
                       day: "numeric",
                       year: "numeric",
@@ -193,7 +227,7 @@ export default function TermDetail() {
             {/* Definition */}
             <div>
               <h3 className="mb-2 text-sm font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-                Definition
+                Definición
               </h3>
               <p className="text-base leading-relaxed text-zinc-900 dark:text-zinc-50 sm:text-lg">
                 {term.definition}
@@ -204,7 +238,7 @@ export default function TermDetail() {
             {term.example && (
               <div>
                 <h3 className="mb-2 text-sm font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-                  Example
+                  Ejemplo
                 </h3>
                 <div className="rounded-lg bg-zinc-100 p-4 dark:bg-zinc-800">
                   <p className="text-sm leading-relaxed text-zinc-700 dark:text-zinc-300 sm:text-base">
@@ -217,7 +251,7 @@ export default function TermDetail() {
             {/* Media */}
             <div>
               <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-                Media
+                Multimedia
               </h3>
               <div className="flex flex-col gap-4">
                 {term.imageId ? (
@@ -227,7 +261,7 @@ export default function TermDetail() {
                     className="rounded shadow-sm max-w-full"
                   />
                 ) : (
-                  <p className="text-sm text-zinc-600 dark:text-zinc-400">No image available</p>
+                  <p className="text-sm text-zinc-600 dark:text-zinc-400">No hay imagen disponible</p>
                 )}
                 {term.audioId ? (
                   <audio
@@ -236,7 +270,7 @@ export default function TermDetail() {
                     className="w-full"
                   />
                 ) : (
-                  <p className="text-sm text-zinc-600 dark:text-zinc-400">No audio available</p>
+                  <p className="text-sm text-zinc-600 dark:text-zinc-400">No hay audio disponible</p>
                 )}
               </div>
             </div>
@@ -246,10 +280,10 @@ export default function TermDetail() {
               <div className="rounded-lg border border-green-200 bg-green-50 p-4 dark:border-green-900 dark:bg-green-950">
                 <div className="flex items-center gap-2 text-green-800 dark:text-green-400">
                   <CheckCircle className="h-5 w-5" />
-                  <span className="font-semibold">Approved</span>
+                  <span className="font-semibold">Aprobado</span>
                 </div>
                 <p className="mt-1 text-sm text-green-700 dark:text-green-500">
-                  Approved on {new Date(term.approvedAt).toLocaleDateString("en-US", {
+                  Aprobado el {new Date(term.approvedAt).toLocaleDateString("es-ES", {
                     month: "long",
                     day: "numeric",
                     year: "numeric",
@@ -263,7 +297,7 @@ export default function TermDetail() {
               <div className="rounded-lg border border-red-200 bg-red-50 p-4 dark:border-red-900 dark:bg-red-950">
                 <div className="flex items-center gap-2 text-red-800 dark:text-red-400">
                   <XCircle className="h-5 w-5" />
-                  <span className="font-semibold">Rejected</span>
+                  <span className="font-semibold">Rechazado</span>
                 </div>
                 <p className="mt-2 text-sm text-red-700 dark:text-red-500">
                   {term.rejectionReason}
@@ -273,6 +307,6 @@ export default function TermDetail() {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </article>
   );
 }

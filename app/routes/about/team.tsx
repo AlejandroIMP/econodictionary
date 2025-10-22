@@ -23,8 +23,8 @@ interface TeamMember {
 const teamMembers: TeamMember[] = [
   {
     name: "David Alejandro Sian Sunuc",
-    role: "Full-Stack Developer & Team Lead",
-    bio: "Passionate about creating educational technology that makes complex subjects accessible. Leads the technical vision and ensures our platform delivers an exceptional user experience.",
+    role: "Desarrollador Full-Stack & Líder del Equipo",
+    bio: "Apasionado por crear tecnología educativa que hace que los temas complejos sean accesibles. Lidera la visión técnica y garantiza que nuestra plataforma ofrezca una experiencia de usuario excepcional.",
     skills: ["React", "TypeScript", "Node.js", "System Design", "Team Leadership"],
     icon: Code,
     social: {
@@ -35,8 +35,8 @@ const teamMembers: TeamMember[] = [
   },
   {
     name: "Brian David Argueta Elel",
-    role: "IOs mobile developer",
-    bio: "Focused on developing seamless mobile experiences for iOS users. Committed to bringing economic education to users' fingertips through intuitive and engaging app design.",
+    role: "Desarrollador móvil iOS",
+    bio: "Enfocado en desarrollar experiencias móviles fluidas para usuarios de iOS. Comprometido a traer educación económica al alcance de los usuarios a través de un diseño de aplicación intuitivo y atractivo.",
     skills: ["Swift", "iOS Development", "Mobile UX", "APIs"],
     icon: Users,
     social: {
@@ -47,8 +47,8 @@ const teamMembers: TeamMember[] = [
   },
   {
     name: "Estuardo Emanuel Feliciano Morales",
-    role: "Mobile Developer & UI/UX Designer",
-    bio: "Combines a keen eye for design with mobile development expertise to create intuitive and engaging user interfaces. Focuses on delivering a seamless experience across all devices.",
+    role: "Desarrollador Móvil & Diseñador UI/UX",
+    bio: "Combina un ojo perspicaz para el diseño con experiencia en desarrollo móvil para crear interfaces de usuario intuitivas y atractivas. Se enfoca en ofrecer una experiencia perfecta en todos los dispositivos.",
     skills: ["Kotlin", "Android", "UI/UX Design", "Figma"],
     icon: Palette,
     social: {
@@ -59,8 +59,8 @@ const teamMembers: TeamMember[] = [
   },
   {
     name: "Ricardo Antonio Noj Castro",
-    role: "Mobile Android Developer",
-    bio: "Dedicated to develop mobile solutions that bring economic education to users on the go. Focuses on performance and usability in mobile environments.",
+    role: "Desarrollador Móvil Android",
+    bio: "Dedicado a desarrollar soluciones móviles que traen educación económica a usuarios en movimiento. Se enfoca en el rendimiento y la usabilidad en entornos móviles.",
     skills: ["Kotlin", "Android Development", "Mobile UX", "APIs", "Performance Optimization"],
     icon: Coffee,
     social: {
@@ -80,11 +80,11 @@ export default function Team() {
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-4xl sm:text-5xl font-bold text-zinc-900 dark:text-zinc-50 mb-4">
-            Meet Our Team
+            Conoce Nuestro Equipo
           </h1>
           <p className="text-xl text-zinc-600 dark:text-zinc-400 max-w-3xl mx-auto">
-            We're a passionate team of developers, designers, and economists working together
-            to make economic education accessible to everyone.
+            Somos un apasionado equipo de desarrolladores, diseñadores y economistas trabajando juntos
+            para hacer que la educación económica sea accesible para todos.
           </p>
         </div>
 
@@ -123,7 +123,7 @@ export default function Team() {
                   </div>
 
                   <div>
-                    <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-3">Connect</h4>
+                    <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-3">Conecta</h4>
                     <div className="flex gap-3">
                       {member.social.github && (
                         <a
@@ -167,40 +167,40 @@ export default function Team() {
         {/* Our Story */}
         <Card className="mb-16">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl">Our Story</CardTitle>
+            <CardTitle className="text-2xl">Nuestra Historia</CardTitle>
             <CardDescription>
-              How four friends turned their shared passion into a mission
+              Cómo cuatro amigos convirtieron su pasión compartida en una misión
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="grid md:grid-cols-2 gap-8 items-center">
               <div className="space-y-4">
                 <h3 className="text-xl font-semibold text-zinc-900 dark:text-zinc-50">
-                  From Classroom to Code
+                  De Aula a Código
                 </h3>
                 <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                  What started as late-night study sessions and passionate debates about economic theory
-                  evolved into a shared vision: creating a platform that makes economics accessible to everyone.
-                  We recognized that while economics shapes our world, the language of economics often feels
-                  intimidating and exclusive.
+                  Lo que comenzó como sesiones de estudio nocturnas y debates apasionados sobre teoría económica
+                  evolucionó en una visión compartida: crear una plataforma que haga que la economía sea accesible para todos.
+                  Reconocimos que mientras la economía forma nuestro mundo, el lenguaje de la economía a menudo se siente
+                  intimidante y exclusivo.
                 </p>
                 <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                  Combining our diverse backgrounds in technology, design, and economics, we set out to
-                  build something different – a platform that doesn't just explain terms, but helps people
-                  understand the "why" behind economic concepts.
+                  Combinando nuestros diversos antecedentes en tecnología, diseño y economía, nos propusimos
+                  construir algo diferente – una plataforma que no solo explique términos, sino que ayude a las personas
+                  a entender el "por qué" detrás de los conceptos económicos.
                 </p>
               </div>
               <div className="space-y-4">
                 <h3 className="text-xl font-semibold text-zinc-900 dark:text-zinc-50">
-                  Our Approach
+                  Nuestro Enfoque
                 </h3>
                 <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                  We believe in learning through doing. Every feature we build starts with real user needs
-                  and real economic questions. Our content is reviewed by experts, but written for humans.
+                  Creemos en aprender haciendo. Cada característica que construimos comienza con necesidades reales de usuarios
+                  y preguntas económicas reales. Nuestro contenido es revisado por expertos, pero escrito para humanos.
                 </p>
                 <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                  We're not just building a dictionary – we're building a community where curiosity meets
-                  understanding, and where complex economic ideas become clear, actionable knowledge.
+                  No solo estamos construyendo un diccionario – estamos construyendo una comunidad donde la curiosidad se encuentra
+                  con la comprensión, y donde las ideas económicas complejas se vuelven claras, conocimiento accionable.
                 </p>
               </div>
             </div>
@@ -210,7 +210,7 @@ export default function Team() {
         {/* Values */}
         <div className="mb-16">
           <h2 className="text-3xl font-bold text-center text-zinc-900 dark:text-zinc-50 mb-12">
-            Our Values
+            Nuestros Valores
           </h2>
           <div className="grid md:grid-cols-3 gap-6">
             <Card className="text-center">
@@ -218,11 +218,11 @@ export default function Team() {
                 <div className="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center mx-auto mb-4">
                   <Users className="h-6 w-6 text-green-600 dark:text-green-400" />
                 </div>
-                <CardTitle className="text-lg">Accessibility</CardTitle>
+                <CardTitle className="text-lg">Accesibilidad</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-zinc-600 dark:text-zinc-400">
-                  Economic knowledge should be available to everyone, regardless of background or education level.
+                  El conocimiento económico debe estar disponible para todos, independientemente de antecedentes o nivel educativo.
                 </p>
               </CardContent>
             </Card>
@@ -232,11 +232,11 @@ export default function Team() {
                 <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mx-auto mb-4">
                   <Code className="h-6 w-6 text-blue-600 dark:text-blue-400" />
                 </div>
-                <CardTitle className="text-lg">Excellence</CardTitle>
+                <CardTitle className="text-lg">Excelencia</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-zinc-600 dark:text-zinc-400">
-                  We maintain the highest standards of accuracy, clarity, and user experience in everything we build.
+                  Mantenemos los más altos estándares de precisión, claridad y experiencia de usuario en todo lo que construimos.
                 </p>
               </CardContent>
             </Card>
@@ -246,11 +246,11 @@ export default function Team() {
                 <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center mx-auto mb-4">
                   <Coffee className="h-6 w-6 text-purple-600 dark:text-purple-400" />
                 </div>
-                <CardTitle className="text-lg">Community</CardTitle>
+                <CardTitle className="text-lg">Comunidad</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-zinc-600 dark:text-zinc-400">
-                  We believe in the power of collaboration and learning together as a community.
+                  Creemos en el poder de la colaboración y el aprendizaje conjunto como comunidad.
                 </p>
               </CardContent>
             </Card>
@@ -263,25 +263,25 @@ export default function Team() {
             <CardContent className="py-12">
               <Users className="h-12 w-12 text-blue-600 mx-auto mb-4" />
               <h3 className="text-2xl font-bold text-blue-900 dark:text-blue-100 mb-4">
-                Join Our Mission
+                Únete a Nuestra Misión
               </h3>
               <p className="text-lg text-blue-800 dark:text-blue-200 mb-6 max-w-2xl mx-auto">
-                Passionate about economics and education? We'd love to hear from you.
-                Whether you're a developer, economist, educator, or just enthusiastic about learning,
-                there are many ways to contribute.
+                ¿Apasionado por la economía y la educación? Nos encantaría saber de ti.
+                Ya seas desarrollador, economista, educador, o simplemente entusiasta del aprendizaje,
+                hay muchas formas de contribuir.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a
                   href="/about/contact"
                   className="inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
                 >
-                  Get in Touch
+                  Ponte en Contacto
                 </a>
                 <a
                   href="/terms"
                   className="inline-flex items-center justify-center px-6 py-3 border border-blue-300 dark:border-blue-600 text-blue-700 dark:text-blue-300 font-medium rounded-lg hover:bg-blue-50 dark:hover:bg-blue-950 transition-colors"
                 >
-                  Explore Content
+                  Explora Contenido
                 </a>
               </div>
             </CardContent>

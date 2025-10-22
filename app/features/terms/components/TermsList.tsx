@@ -39,17 +39,20 @@ export function TermsList({
     return (
       <div className="flex flex-col items-center justify-center py-12 text-center">
         <p className="text-lg text-zinc-600 dark:text-zinc-400">{emptyMessage}</p>
-        <p className="mt-2 text-sm text-zinc-500">Try adjusting your filters or search query</p>
+        <p className="mt-2 text-sm text-zinc-500">Intenta ajustar tus filtros o consulta de búsqueda</p>
       </div>
     );
   }
 
   return (
-    <div className={cn("grid gap-4 sm:grid-cols-2 lg:grid-cols-3", className)}>
+    <section 
+      className={cn("grid gap-4 sm:grid-cols-2 lg:grid-cols-3", className)}
+      aria-label="Lista de términos económicos"
+    >
       {terms.map((term) => (
         <TermCard key={term.id} term={term} />
       ))}
-    </div>
+    </section>
   );
 }
 
@@ -59,50 +62,52 @@ interface TermCardProps {
 
 function TermCard({ term }: TermCardProps) {
   return (
-    <Link to={`/terms/${term.id}`} className="block transition-transform hover:scale-[1.02]">
-      <Card className="h-full hover:shadow-md transition-shadow">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-lg sm:text-xl line-clamp-2">
-            {term.name}
-          </CardTitle>
-          {term.category && (
-            <Badge variant="secondary" className="w-fit">
-              {term.category}
-            </Badge>
-          )}
-        </CardHeader>
+    <article>
+      <Link to={`/terms/${term.id}`} className="block transition-transform hover:scale-[1.02]">
+        <Card className="h-full hover:shadow-md transition-shadow">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-lg sm:text-xl line-clamp-2">
+              {term.name}
+            </CardTitle>
+            {term.category && (
+              <Badge variant="secondary" className="w-fit">
+                {term.category}
+              </Badge>
+            )}
+          </CardHeader>
 
-        <CardContent className="pb-3">
-          <CardDescription className="line-clamp-3 text-sm">
-            {term.definition}
-          </CardDescription>
+          <CardContent className="pb-3">
+            <CardDescription className="line-clamp-3 text-sm">
+              {term.definition}
+            </CardDescription>
 
-          {term.example && (
-            <div className="mt-3 rounded-lg bg-zinc-50 p-3 dark:bg-zinc-900">
-              <p className="text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1">
-                Example:
-              </p>
-              <p className="text-xs text-zinc-600 dark:text-zinc-400 line-clamp-2">
-                {term.example}
-              </p>
+            {term.example && (
+              <div className="mt-3 rounded-lg bg-zinc-50 p-3 dark:bg-zinc-900">
+                <p className="text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1">
+                  Ejemplo:
+                </p>
+                <p className="text-xs text-zinc-600 dark:text-zinc-400 line-clamp-2">
+                  {term.example}
+                </p>
+              </div>
+            )}
+          </CardContent>
+
+          <CardFooter className="flex-col items-start gap-2 text-xs text-zinc-500 pt-0">
+            <div className="flex items-center gap-1">
+              <Calendar className="h-3 w-3" />
+              <time dateTime={new Date(term.createdAt).toISOString()}>
+                {new Date(term.createdAt).toLocaleDateString("es-ES", {
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
+                })}
+              </time>
             </div>
-          )}
-        </CardContent>
-
-        <CardFooter className="flex-col items-start gap-2 text-xs text-zinc-500 pt-0">
-          <div className="flex items-center gap-1">
-            <Calendar className="h-3 w-3" />
-            <span>
-              {new Date(term.createdAt).toLocaleDateString("en-US", {
-                month: "short",
-                day: "numeric",
-                year: "numeric",
-              })}
-            </span>
-          </div>
-        </CardFooter>
-      </Card>
-    </Link>
+          </CardFooter>
+        </Card>
+      </Link>
+    </article>
   );
 }
 

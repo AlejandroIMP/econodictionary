@@ -18,83 +18,83 @@ interface FAQItem {
 const faqData: FAQItem[] = [
   {
     id: "what-is-econodictionary",
-    question: "What is Econodictionary?",
-    answer: "Econodictionary is a comprehensive online platform dedicated to making economic concepts accessible to everyone. We provide clear, practical explanations of economic terms, principles, and theories with real-world examples and applications.",
+    question: "¿Qué es Econodictionary?",
+    answer: "Econodictionary es una plataforma en línea integral dedicada a hacer que los conceptos económicos sean accesibles para todos. Proporcionamos explicaciones claras y prácticas de términos, principios y teorías económicas con ejemplos y aplicaciones del mundo real.",
     category: "general"
   },
   {
     id: "who-can-use",
-    question: "Who can use Econodictionary?",
-    answer: "Anyone interested in economics! Our platform serves students, professionals, business owners, policymakers, and curious individuals. Whether you're taking your first economics course or analyzing complex financial markets, you'll find valuable content here.",
+    question: "¿Quién puede usar Econodictionary?",
+    answer: "¡Cualquiera interesado en economía! Nuestra plataforma sirve a estudiantes, profesionales, empresarios, formuladores de políticas e individuos curiosos. Ya sea que estés tomando tu primer curso de economía o analizando mercados financieros complejos, encontrarás contenido valioso aquí.",
     category: "general"
   },
   {
     id: "content-free",
-    question: "Is the content free to access?",
-    answer: "Yes! All basic content is completely free to access. We believe economic knowledge should be accessible to everyone. Some premium features like advanced analytics or personalized study plans may be available in the future.",
+    question: "¿Es el contenido gratuito para acceder?",
+    answer: "¡Sí! Todo el contenido básico es completamente gratuito para acceder. Creemos que el conocimiento económico debería ser accesible para todos. Algunas características premium como análisis avanzado o planes de estudio personalizados pueden estar disponibles en el futuro.",
     category: "general"
   },
   {
     id: "contribute-content",
-    question: "How can I contribute content?",
-    answer: "We welcome contributions from economics experts, educators, and enthusiasts! Create an account and submit new terms, improve existing definitions, or add examples. All submissions go through our review process to ensure quality and accuracy.",
+    question: "¿Cómo puedo contribuir con contenido?",
+    answer: "¡Acogemos contribuciones de expertos en economía, educadores y entusiastas! Crea una cuenta y envía nuevos términos, mejora definiciones existentes o agrega ejemplos. Todos los envíos pasan por nuestro proceso de revisión para garantizar calidad y precisión.",
     category: "contributing"
   },
   {
     id: "content-reviewed",
-    question: "How is content reviewed and approved?",
-    answer: "All submissions are reviewed by our team of economics experts and moderators. We check for accuracy, clarity, neutrality, and educational value. Approved content is published immediately, while suggestions for improvement are sent back to contributors.",
+    question: "¿Cómo se revisa y aprueba el contenido?",
+    answer: "Todos los envíos son revisados por nuestro equipo de expertos en economía y moderadores. Verificamos la precisión, claridad, neutralidad y valor educativo. El contenido aprobado se publica inmediatamente, mientras que las sugerencias de mejora se envían a los colaboradores.",
     category: "contributing"
   },
   {
     id: "edit-existing",
-    question: "Can I edit existing terms?",
-    answer: "Yes, but only if you're the original author of the term. We believe in author ownership and accountability. If you spot an error in someone else's content, you can suggest improvements through our feedback system.",
+    question: "¿Puedo editar términos existentes?",
+    answer: "Sí, pero solo si eres el autor original del término. Creemos en la propiedad y responsabilidad del autor. Si detectas un error en el contenido de otro, puedes sugerir mejoras a través de nuestro sistema de comentarios.",
     category: "contributing"
   },
   {
     id: "account-required",
-    question: "Do I need an account to use the platform?",
-    answer: "You can browse and read all content without an account. However, creating an account allows you to contribute content, save favorite terms, track your learning progress, and participate in discussions.",
+    question: "¿Necesito una cuenta para usar la plataforma?",
+    answer: "Puedes explorar y leer todo el contenido sin una cuenta. Sin embargo, crear una cuenta te permite contribuir con contenido, guardar términos favoritos, rastrear tu progreso de aprendizaje y participar en discusiones.",
     category: "account"
   },
   {
     id: "account-safe",
-    question: "Is my account information safe?",
-    answer: "Absolutely. We use industry-standard security practices including encrypted passwords, secure authentication, and regular security audits. We never share your personal information with third parties without your consent.",
+    question: "¿Es segura mi información de cuenta?",
+    answer: "Absolutamente. Utilizamos prácticas de seguridad estándar de la industria, incluidas contraseñas encriptadas, autenticación segura y auditorías de seguridad regulares. Nunca compartimos tu información personal con terceros sin tu consentimiento.",
     category: "account"
   },
   {
     id: "forgot-password",
-    question: "What if I forget my password?",
-    answer: "Use the 'Forgot Password' link on the sign-in page. We'll send you a secure link to reset your password. Make sure to check your spam folder if you don't see the email.",
+    question: "¿Qué hago si olvido mi contraseña?",
+    answer: "Usa el enlace 'Olvidé mi contraseña' en la página de inicio de sesión. Te enviaremos un enlace seguro para restablecer tu contraseña. Asegúrate de revisar tu carpeta de spam si no ves el correo.",
     category: "account"
   },
   {
     id: "report-content",
-    question: "How do I report inappropriate content?",
-    answer: "We take content quality seriously. Use the 'Report' button on any term page or contact us directly. Our moderation team reviews all reports within 24 hours and takes appropriate action.",
+    question: "¿Cómo reporto contenido inapropiado?",
+    answer: "Tomamos la calidad del contenido en serio. Usa el botón 'Reportar' en cualquier página de término o contáctanos directamente. Nuestro equipo de moderación revisa todos los reportes dentro de 24 horas y toma las medidas apropiadas.",
     category: "support"
   },
   {
     id: "technical-issues",
-    question: "What should I do if I encounter technical issues?",
-    answer: "First, try refreshing the page or clearing your browser cache. If the issue persists, contact our support team with details about your browser, device, and the specific problem you're experiencing.",
+    question: "¿Qué debo hacer si encuentro problemas técnicos?",
+    answer: "Primero, intenta actualizar la página o limpiar el caché de tu navegador. Si el problema persiste, contacta a nuestro equipo de soporte con detalles sobre tu navegador, dispositivo y el problema específico que estás experimentando.",
     category: "support"
   },
   {
     id: "feedback-suggestions",
-    question: "How can I provide feedback or suggestions?",
-    answer: "We love hearing from our users! Use the contact form to share your thoughts, or join our community discussions. Your feedback helps us improve the platform for everyone.",
+    question: "¿Cómo puedo proporcionar comentarios o sugerencias?",
+    answer: "¡Nos encanta saber de nuestros usuarios! Usa el formulario de contacto para compartir tus ideas o únete a nuestras discusiones comunitarias. Tus comentarios nos ayudan a mejorar la plataforma para todos.",
     category: "support"
   }
 ];
 
 const categories = [
   { id: "general", label: "General", icon: BookOpen },
-  { id: "contributing", label: "Contributing", icon: Users },
-  { id: "account", label: "Account", icon: Shield },
-  { id: "support", label: "Support", icon: HelpCircle }
+  { id: "contributing", label: "Contribuyendo", icon: Users },
+  { id: "account", label: "Cuenta", icon: Shield },
+  { id: "support", label: "Soporte", icon: HelpCircle }
 ];
 
 export default function FAQ() {
@@ -119,12 +119,12 @@ export default function FAQ() {
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl sm:text-5xl font-bold text-zinc-900 dark:text-zinc-50 mb-4">
-            Frequently Asked Questions
+            Preguntas Frecuentes
           </h1>
           <p className="text-xl text-zinc-600 dark:text-zinc-400 max-w-3xl mx-auto">
-            Find answers to common questions about Econodictionary. Can't find what you're looking for?
+            Encuentra respuestas a preguntas comunes sobre Econodictionary. ¿No encuentras lo que buscas?
             <a href="/about/contact" className="text-blue-600 hover:text-blue-700 ml-1">
-              Contact us
+              Contáctanos
             </a>.
           </p>
         </div>
@@ -183,24 +183,24 @@ export default function FAQ() {
             <CardContent className="py-12">
               <HelpCircle className="h-12 w-12 text-blue-600 mx-auto mb-4" />
               <h3 className="text-2xl font-bold text-blue-900 dark:text-blue-100 mb-4">
-                Still Need Help?
+                ¿Aún Necesitas Ayuda?
               </h3>
               <p className="text-lg text-blue-800 dark:text-blue-200 mb-6 max-w-2xl mx-auto">
-                Can't find the answer you're looking for? Our support team is here to help.
-                Reach out to us and we'll get back to you as soon as possible.
+                ¿No encuentras la respuesta que buscas? Nuestro equipo de soporte está aquí para ayudar.
+                Ponte en contacto con nosotros y nos comunicaremos lo antes posible.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a
                   href="/about/contact"
                   className="inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
                 >
-                  Contact Support
+                  Contactar Soporte
                 </a>
                 <a
                   href="/terms"
                   className="inline-flex items-center justify-center px-6 py-3 border border-blue-300 dark:border-blue-600 text-blue-700 dark:text-blue-300 font-medium rounded-lg hover:bg-blue-50 dark:hover:bg-blue-950 transition-colors"
                 >
-                  Browse Terms
+                  Explorar Términos
                 </a>
               </div>
             </CardContent>

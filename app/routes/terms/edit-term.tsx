@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { ArrowLeft, Loader2 } from "lucide-react";
+import type { Route } from "./+types/edit-term";
 import {
   Card,
   CardHeader,
@@ -25,21 +26,47 @@ import { useCategories } from "~/features/terms/hooks";
 import { uploadImage } from "~/features/terms/utils/imageUpload";
 import type { CreateTermRequest } from "~/features/terms/types";
 
+export function meta({ params }: Route.MetaArgs) {
+  const termId = params.term;
+  const baseUrl = "https://econodictionary.com";
+  return [
+    { 
+      title: "Editar Término - Diccionario Económico" 
+    },
+    { 
+      name: "description", 
+      content: "Actualiza la definición, ejemplos e información multimedia de tu término económico en el diccionario colaborativo." 
+    },
+    { 
+      property: "og:title", 
+      content: "Editar Término Económico" 
+    },
+    { 
+      property: "og:url", 
+      content: `${baseUrl}/terms/${termId}/edit` 
+    },
+    { 
+      name: "robots", 
+      content: "noindex, follow" 
+    },
+  ];
+}
+
 // Zod schema for form validation
 const editTermSchema = z.object({
   name: z
     .string()
-    .min(2, "Name must be at least 2 characters")
-    .max(100, "Name must be less than 100 characters"),
+    .min(2, "El nombre debe tener al menos 2 caracteres")
+    .max(100, "El nombre debe tener menos de 100 caracteres"),
   definition: z
     .string()
-    .min(10, "Definition must be at least 10 characters")
-    .max(1000, "Definition must be less than 1000 characters"),
-  category: z.string().min(1, "Please select a category"),
+    .min(10, "La definición debe tener al menos 10 caracteres")
+    .max(1000, "La definición debe tener menos de 1000 caracteres"),
+  category: z.string().min(1, "Por favor selecciona una categoría"),
   example: z
     .string()
-    .min(10, "Example must be at least 10 characters")
-    .max(500, "Example must be less than 500 characters"),
+    .min(10, "El ejemplo debe tener al menos 10 caracteres")
+    .max(500, "El ejemplo debe tener menos de 500 caracteres"),
 });
 
 type EditTermFormData = z.infer<typeof editTermSchema>;
@@ -64,7 +91,7 @@ export default function EditTerm() {
 
   // Create categories options (remove "All Categories" and add empty option)
   const categoryOptions = [
-    { value: "", label: "Select a category" },
+    { value: "", label: "Selecciona una categoría" },
     ...categories
       .filter(cat => cat !== "All Categories")
       .map(cat => ({ value: cat, label: cat }))
@@ -177,12 +204,12 @@ export default function EditTerm() {
         <div className="text-center">
           <div className="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 dark:border-red-900 dark:bg-red-950">
             <p className="text-sm text-red-800 dark:text-red-400">
-              {error || "Term not found"}
+              {error || "Término no encontrado"}
             </p>
           </div>
           <Button variant="outline" onClick={() => navigate("/terms")}>
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Terms
+            Volver a Términos
           </Button>
         </div>
       </div>
@@ -200,15 +227,15 @@ export default function EditTerm() {
           className="mb-6"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Term
+          Volver al Término
         </Button>
 
         {/* Form Card */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-2xl sm:text-3xl">Edit Term</CardTitle>
+            <CardTitle className="text-2xl sm:text-3xl">Editar Término</CardTitle>
             <CardDescription className="text-base">
-              Update the economic term. All fields marked with * are required.
+              Actualiza el término económico. Todos los campos marcados con * son requeridos.
             </CardDescription>
           </CardHeader>
 
@@ -217,11 +244,11 @@ export default function EditTerm() {
               {/* Name Field */}
               <div className="space-y-2">
                 <Label htmlFor="name">
-                  Term Name <span className="text-red-500">*</span>
+                  Nombre del Término <span className="text-red-500">*</span>
                 </Label>
                 <Input
                   id="name"
-                  placeholder="e.g., Inflation"
+                  placeholder="p.ej., Inflación"
                   {...register("name")}
                   aria-invalid={errors.name ? "true" : "false"}
                 />
@@ -235,7 +262,7 @@ export default function EditTerm() {
               {/* Category Field */}
               <div className="space-y-2">
                 <Label htmlFor="category">
-                  Category <span className="text-red-500">*</span>
+                  Categoría <span className="text-red-500">*</span>
                 </Label>
                 <Select
                   id="category"
@@ -259,11 +286,11 @@ export default function EditTerm() {
               {/* Definition Field */}
               <div className="space-y-2">
                 <Label htmlFor="definition">
-                  Definition <span className="text-red-500">*</span>
+                  Definición <span className="text-red-500">*</span>
                 </Label>
                 <Textarea
                   id="definition"
-                  placeholder="Provide a clear and concise definition..."
+                  placeholder="Proporciona una definición clara y concisa..."
                   rows={5}
                   {...register("definition")}
                   aria-invalid={errors.definition ? "true" : "false"}
@@ -278,11 +305,11 @@ export default function EditTerm() {
               {/* Example Field */}
               <div className="space-y-2">
                 <Label htmlFor="example">
-                  Example <span className="text-red-500">*</span>
+                  Ejemplo <span className="text-red-500">*</span>
                 </Label>
                 <Textarea
                   id="example"
-                  placeholder="Provide a practical example to illustrate the term..."
+                  placeholder="Proporciona un ejemplo práctico para ilustrar el término..."
                   rows={4}
                   {...register("example")}
                   aria-invalid={errors.example ? "true" : "false"}
@@ -297,7 +324,7 @@ export default function EditTerm() {
               {/* Optional Fields */}
               <div className="space-y-4 rounded-lg border border-zinc-200 bg-zinc-50 p-4 dark:border-zinc-800 dark:bg-zinc-900">
                 <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">
-                  Optional Media
+                  Multimedia Opcional
                 </h3>
 
                 <ImageUpload 
@@ -316,7 +343,7 @@ export default function EditTerm() {
                 className="w-full sm:w-auto"
                 disabled={isSubmitting || isUploading}
               >
-                Cancel
+                Cancelar
               </Button>
               <Button
                 type="submit"
@@ -326,10 +353,10 @@ export default function EditTerm() {
                 {isSubmitting || isUploading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    {isUploading ? "Uploading..." : "Updating..."}
+                    {isUploading ? "Cargando..." : "Actualizando..."}
                   </>
                 ) : (
-                  "Update Term"
+                  "Actualizar Término"
                 )}
               </Button>
             </CardFooter>

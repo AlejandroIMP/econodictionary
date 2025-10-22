@@ -15,13 +15,13 @@ export default function TermsOfService() {
         <div className="text-center mb-12">
           <FileText className="h-16 w-16 text-blue-600 mx-auto mb-4" />
           <h1 className="text-4xl sm:text-5xl font-bold text-zinc-900 dark:text-zinc-50 mb-4">
-            Terms of Service
+            Términos de Servicio
           </h1>
           <p className="text-xl text-zinc-600 dark:text-zinc-400 max-w-3xl mx-auto">
-            Please read these terms carefully before using Econodictionary.
+            Por favor lee estos términos cuidadosamente antes de usar Econodictionary.
           </p>
           <p className="text-sm text-zinc-500 dark:text-zinc-500 mt-4">
-            Last updated: October 10, 2025
+            Última actualización: 10 de Octubre de 2025
           </p>
         </div>
 
@@ -30,15 +30,15 @@ export default function TermsOfService() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Scale className="h-5 w-5" />
-              Agreement to Terms
+              Acuerdo con los Términos
             </CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
-              By accessing and using Econodictionary, you agree to be bound by these Terms of Service.
-              If you do not agree to all the terms and conditions of this agreement, you may not access
-              the service. These terms apply to all users of the platform, including contributors,
-              moderators, and administrators.
+              Al acceder y usar Econodictionary, aceptas estar vinculado por estos Términos de Servicio.
+              Si no estás de acuerdo con todos los términos y condiciones de este acuerdo, no puedes acceder
+              al servicio. Estos términos aplican a todos los usuarios de la plataforma, incluyendo colaboradores,
+              moderadores y administradores.
             </p>
           </CardContent>
         </Card>
@@ -46,25 +46,25 @@ export default function TermsOfService() {
         {/* Description of Service */}
         <Card className="mb-8">
           <CardHeader>
-            <CardTitle>Description of Service</CardTitle>
+            <CardTitle>Descripción del Servicio</CardTitle>
             <CardDescription>
-              What Econodictionary provides and how it works
+              Lo que Econodictionary proporciona y cómo funciona
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <p className="text-zinc-600 dark:text-zinc-400">
-              Econodictionary is an online platform that provides educational content about economic
-              concepts, terms, and principles. Our services include:
+              Econodictionary es una plataforma en línea que proporciona contenido educativo sobre conceptos,
+              términos y principios económicos. Nuestros servicios incluyen:
             </p>
             <ul className="space-y-2 text-zinc-600 dark:text-zinc-400 ml-6">
-              <li className="list-disc">Access to economic term definitions and explanations</li>
-              <li className="list-disc">User-generated content and community contributions</li>
-              <li className="list-disc">Search and browsing functionality</li>
-              <li className="list-disc">Account management and personalization features</li>
-              <li className="list-disc">Educational resources and learning tools</li>
+              <li className="list-disc">Acceso a definiciones y explicaciones de términos económicos</li>
+              <li className="list-disc">Contenido generado por el usuario y contribuciones comunitarias</li>
+              <li className="list-disc">Funcionalidad de búsqueda y navegación</li>
+              <li className="list-disc">Gestión de cuentas y características de personalización</li>
+              <li className="list-disc">Recursos educativos y herramientas de aprendizaje</li>
             </ul>
             <p className="text-zinc-600 dark:text-zinc-400">
-              We reserve the right to modify or discontinue any service at any time without notice.
+              Nos reservamos el derecho de modificar o discontinuar cualquier servicio en cualquier momento sin previo aviso.
             </p>
           </CardContent>
         </Card>
@@ -74,33 +74,33 @@ export default function TermsOfService() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Users className="h-5 w-5" />
-              User Accounts and Registration
+              Cuentas de Usuario y Registro
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Account Creation</h4>
+              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Creación de Cuenta</h4>
               <p className="text-zinc-600 dark:text-zinc-400">
-                To contribute content or access certain features, you must create an account. You agree
-                to provide accurate, current, and complete information during registration and to update
-                such information to keep it accurate, current, and complete.
+                Para contribuir contenido o acceder a ciertas características, debes crear una cuenta. Aceptas
+                proporcionar información precisa, actual y completa durante el registro y actualizar
+                tal información para mantenerla precisa, actual y completa.
               </p>
             </div>
 
             <div>
-              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Account Security</h4>
+              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Seguridad de la Cuenta</h4>
               <p className="text-zinc-600 dark:text-zinc-400">
-                You are responsible for maintaining the confidentiality of your account credentials and
-                for all activities that occur under your account. You agree to immediately notify us of
-                any unauthorized use of your account.
+                Eres responsable de mantener la confidencialidad de las credenciales de tu cuenta y
+                de todas las actividades que ocurran bajo tu cuenta. Aceptas notificarnos inmediatamente de
+                cualquier uso no autorizado de tu cuenta.
               </p>
             </div>
 
             <div>
-              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Account Termination</h4>
+              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Terminación de Cuenta</h4>
               <p className="text-zinc-600 dark:text-zinc-400">
-                We reserve the right to terminate or suspend your account at any time for violations of
-                these terms or for other conduct that we determine to be harmful to our platform or users.
+                Nos reservamos el derecho de terminar o suspender tu cuenta en cualquier momento por violaciones de
+                estos términos u otra conducta que determinemos que es perjudicial para nuestra plataforma o usuarios.
               </p>
             </div>
           </CardContent>
@@ -109,39 +109,39 @@ export default function TermsOfService() {
         {/* User Content */}
         <Card className="mb-8">
           <CardHeader>
-            <CardTitle>User-Generated Content</CardTitle>
+            <CardTitle>Contenido Generado por el Usuario</CardTitle>
             <CardDescription>
-              Rules for contributing and using content on our platform
+              Reglas para contribuir y usar contenido en nuestra plataforma
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Content Ownership</h4>
+              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Propiedad del Contenido</h4>
               <p className="text-zinc-600 dark:text-zinc-400">
-                You retain ownership of content you create and submit to our platform. By submitting content,
-                you grant us a worldwide, non-exclusive, royalty-free license to use, display, and distribute
-                your content in connection with our services.
+                Retienes la propiedad del contenido que creas y envías a nuestra plataforma. Al enviar contenido,
+                nos otorgas una licencia mundial, no exclusiva y sin regalías para usar, mostrar y distribuir
+                tu contenido en conexión con nuestros servicios.
               </p>
             </div>
 
             <div>
-              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Content Standards</h4>
-              <p className="text-zinc-600 dark:text-zinc-400 mb-2">All user-generated content must:</p>
+              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Estándares de Contenido</h4>
+              <p className="text-zinc-600 dark:text-zinc-400 mb-2">Todo el contenido generado por el usuario debe:</p>
               <ul className="space-y-1 text-zinc-600 dark:text-zinc-400 ml-6">
-                <li className="list-disc">Be accurate and factually correct</li>
-                <li className="list-disc">Be original or properly attributed</li>
-                <li className="list-disc">Not violate any laws or regulations</li>
-                <li className="list-disc">Not infringe on intellectual property rights</li>
-                <li className="list-disc">Not contain harmful, offensive, or inappropriate material</li>
-                <li className="list-disc">Be relevant to economic education</li>
+                <li className="list-disc">Ser preciso y factualmente correcto</li>
+                <li className="list-disc">Ser original o apropiadamente atribuido</li>
+                <li className="list-disc">No violar ninguna ley o regulación</li>
+                <li className="list-disc">No infringir derechos de propiedad intelectual</li>
+                <li className="list-disc">No contener material dañino, ofensivo o inapropiado</li>
+                <li className="list-disc">Ser relevante para la educación económica</li>
               </ul>
             </div>
 
             <div>
-              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Content Moderation</h4>
+              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Moderación de Contenido</h4>
               <p className="text-zinc-600 dark:text-zinc-400">
-                We reserve the right to review, edit, or remove any content that violates these terms.
-                Content may be reviewed by our moderation team or community members before publication.
+                Nos reservamos el derecho de revisar, editar o eliminar cualquier contenido que viole estos términos.
+                El contenido puede ser revisado por nuestro equipo de moderación o miembros de la comunidad antes de la publicación.
               </p>
             </div>
           </CardContent>
@@ -152,48 +152,48 @@ export default function TermsOfService() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <AlertTriangle className="h-5 w-5" />
-              Prohibited Uses
+              Usos Prohibidos
             </CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-zinc-600 dark:text-zinc-400 mb-4">
-              You agree not to use our platform for any unlawful or prohibited purpose. Prohibited activities include:
+              Aceptas no usar nuestra plataforma para ningún propósito ilegal o prohibido. Las actividades prohibidas incluyen:
             </p>
             <div className="grid md:grid-cols-2 gap-4">
               <ul className="space-y-2 text-zinc-600 dark:text-zinc-400">
                 <li className="flex items-start gap-2">
                   <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Violating intellectual property rights</span>
+                  <span>Violar derechos de propiedad intelectual</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Posting false or misleading information</span>
+                  <span>Publicar información falsa o engañosa</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Harassing or abusing other users</span>
+                  <span>Acosar o abusar de otros usuarios</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Attempting to gain unauthorized access</span>
+                  <span>Intentar obtener acceso no autorizado</span>
                 </li>
               </ul>
               <ul className="space-y-2 text-zinc-600 dark:text-zinc-400">
                 <li className="flex items-start gap-2">
                   <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Distributing malware or viruses</span>
+                  <span>Distribuir malware o virus</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Spamming or excessive automated use</span>
+                  <span>Spam o uso automatizado excesivo</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Impersonating others or misrepresenting affiliation</span>
+                  <span>Suplantación de otros o tergiversación de afiliación</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Using the platform for commercial purposes without permission</span>
+                  <span>Usar la plataforma con fines comerciales sin permiso</span>
                 </li>
               </ul>
             </div>
@@ -205,32 +205,32 @@ export default function TermsOfService() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Shield className="h-5 w-5" />
-              Intellectual Property
+              Propiedad Intelectual
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Our Content</h4>
+              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Nuestro Contenido</h4>
               <p className="text-zinc-600 dark:text-zinc-400">
-                The platform, including its design, code, and original content, is protected by copyright,
-                trademark, and other intellectual property laws. You may not copy, modify, or distribute
-                our proprietary content without permission.
+                La plataforma, incluyendo su diseño, código y contenido original, está protegida por derechos de autor,
+                marcas registradas y otras leyes de propiedad intelectual. No puedes copiar, modificar o distribuir
+                nuestro contenido propietario sin permiso.
               </p>
             </div>
 
             <div>
-              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">User Content License</h4>
+              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Licencia de Contenido del Usuario</h4>
               <p className="text-zinc-600 dark:text-zinc-400">
-                By submitting content, you grant us a license to use, display, and distribute your content
-                on our platform and in related materials. This license is non-exclusive and royalty-free.
+                Al enviar contenido, nos otorgas una licencia para usar, mostrar y distribuir tu contenido
+                en nuestra plataforma y en materiales relacionados. Esta licencia es no exclusiva y sin regalías.
               </p>
             </div>
 
             <div>
-              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">DMCA and Copyright</h4>
+              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">DMCA y Derechos de Autor</h4>
               <p className="text-zinc-600 dark:text-zinc-400">
-                We respect intellectual property rights. If you believe your copyright has been infringed,
-                please contact us with a DMCA takedown notice including the required information.
+                Respetamos los derechos de propiedad intelectual. Si crees que tus derechos de autor han sido infringidos,
+                por favor contáctanos con un aviso de eliminación DMCA que incluya la información requerida.
               </p>
             </div>
           </CardContent>
@@ -239,30 +239,30 @@ export default function TermsOfService() {
         {/* Disclaimers */}
         <Card className="mb-8">
           <CardHeader>
-            <CardTitle>Disclaimers and Limitations</CardTitle>
+            <CardTitle>Exenciones de Responsabilidad y Limitaciones</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Educational Purpose Only</h4>
+              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Solo Propósitos Educativos</h4>
               <p className="text-zinc-600 dark:text-zinc-400">
-                Our content is provided for educational purposes only. It is not intended as financial,
-                investment, or professional advice. Always consult qualified professionals for important decisions.
+                Nuestro contenido se proporciona solo con fines educativos. No pretende ser financiero,
+                inversión o asesoramiento profesional. Siempre consulta profesionales calificados para decisiones importantes.
               </p>
             </div>
 
             <div>
-              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">No Warranties</h4>
+              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Sin Garantías</h4>
               <p className="text-zinc-600 dark:text-zinc-400">
-                The platform is provided "as is" without warranties of any kind. We do not guarantee
-                the accuracy, completeness, or timeliness of any content.
+                La plataforma se proporciona "tal como está" sin garantías de ningún tipo. No garantizamos
+                la precisión, completitud u oportunidad de ningún contenido.
               </p>
             </div>
 
             <div>
-              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Limitation of Liability</h4>
+              <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Limitación de Responsabilidad</h4>
               <p className="text-zinc-600 dark:text-zinc-400">
-                We shall not be liable for any indirect, incidental, special, or consequential damages
-                arising from your use of the platform or reliance on its content.
+                No seremos responsables de ningún daño indirecto, incidental, especial o consecuente
+                derivado de tu uso de la plataforma o confianza en su contenido.
               </p>
             </div>
           </CardContent>
@@ -271,13 +271,13 @@ export default function TermsOfService() {
         {/* Termination */}
         <Card className="mb-8">
           <CardHeader>
-            <CardTitle>Termination</CardTitle>
+            <CardTitle>Terminación</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-zinc-600 dark:text-zinc-400">
-              We may terminate or suspend your account and access to our services immediately,
-              without prior notice, for any reason, including breach of these terms. Upon termination,
-              your right to use the platform will cease immediately.
+              Podemos terminar o suspender tu cuenta y acceso a nuestros servicios inmediatamente,
+              sin previo aviso, por cualquier motivo, incluyendo violación de estos términos. Al terminar,
+              tu derecho de usar la plataforma cesará inmediatamente.
             </p>
           </CardContent>
         </Card>
@@ -285,13 +285,13 @@ export default function TermsOfService() {
         {/* Changes to Terms */}
         <Card className="mb-8">
           <CardHeader>
-            <CardTitle>Changes to Terms</CardTitle>
+            <CardTitle>Cambios a los Términos</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-zinc-600 dark:text-zinc-400">
-              We reserve the right to modify these terms at any time. We will notify users of significant
-              changes through the platform or via email. Continued use of the platform after changes
-              constitutes acceptance of the new terms.
+              Nos reservamos el derecho de modificar estos términos en cualquier momento. Notificaremos a los usuarios de cambios significativos
+              a través de la plataforma o por correo electrónico. El uso continuo de la plataforma después de los cambios
+              constituye la aceptación de los nuevos términos.
             </p>
           </CardContent>
         </Card>
@@ -299,12 +299,12 @@ export default function TermsOfService() {
         {/* Governing Law */}
         <Card className="mb-8">
           <CardHeader>
-            <CardTitle>Governing Law</CardTitle>
+            <CardTitle>Ley Aplicable</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-zinc-600 dark:text-zinc-400">
-              These terms are governed by the laws of Guatemala. Any disputes arising from these terms
-              or your use of the platform will be resolved through binding arbitration in Guatemala City.
+              Estos términos se rigen por las leyes de Guatemala. Cualquier disputa derivada de estos términos
+              o tu uso de la plataforma se resolverá mediante arbitraje vinculante en la Ciudad de Guatemala.
             </p>
           </CardContent>
         </Card>
@@ -312,19 +312,19 @@ export default function TermsOfService() {
         {/* Contact Information */}
         <Card>
           <CardHeader>
-            <CardTitle>Contact Information</CardTitle>
+            <CardTitle>Información de Contacto</CardTitle>
             <CardDescription>
-              Questions about these terms?
+              ¿Preguntas sobre estos términos?
             </CardDescription>
           </CardHeader>
           <CardContent>
             <p className="text-zinc-600 dark:text-zinc-400 mb-4">
-              If you have questions about these Terms of Service, please contact us:
+              Si tienes preguntas sobre estos Términos de Servicio, por favor contáctanos:
             </p>
             <div className="space-y-2 text-zinc-600 dark:text-zinc-400">
-              <p><strong>Email:</strong> legal@econodictionary.com</p>
-              <p><strong>Address:</strong> Guatemala City, Guatemala</p>
-              <p><strong>Response Time:</strong> Within 7 business days</p>
+              <p><strong>Correo Electrónico:</strong> legal@econodictionary.com</p>
+              <p><strong>Dirección:</strong> Ciudad de Guatemala, Guatemala</p>
+              <p><strong>Tiempo de Respuesta:</strong> Dentro de 7 días hábiles</p>
             </div>
           </CardContent>
         </Card>

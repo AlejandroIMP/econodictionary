@@ -14,11 +14,11 @@ export default function About() {
         {/* Hero Section */}
         <div className="text-center mb-16">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-zinc-900 dark:text-zinc-50 mb-6">
-            About Econodictionary
+            Acerca de Econodictionary
           </h1>
           <p className="text-xl text-zinc-600 dark:text-zinc-400 max-w-3xl mx-auto leading-relaxed">
-            Your comprehensive guide to understanding economic concepts, terms, and principles.
-            Built by economics enthusiasts for students, professionals, and curious minds.
+            Tu guía completa para comprender conceptos, términos y principios económicos.
+            Construido por entusiastas de la economía para estudiantes, profesionales y mentes curiosas.
           </p>
         </div>
 
@@ -27,15 +27,14 @@ export default function About() {
           <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/50 dark:to-indigo-950/50 border-blue-200 dark:border-blue-800">
             <CardHeader className="text-center">
               <CardTitle className="text-2xl sm:text-3xl text-blue-900 dark:text-blue-100">
-                Our Mission
+                Nuestra Misión
               </CardTitle>
             </CardHeader>
             <CardContent className="text-center">
               <p className="text-lg text-blue-800 dark:text-blue-200 max-w-4xl mx-auto leading-relaxed">
-                To democratize economic knowledge by providing clear, accessible explanations of complex
-                economic concepts. We believe that understanding economics shouldn't be limited to
-                academics and professionals – it should be available to everyone who wants to make
-                informed decisions about their financial future.
+                Democratizar el conocimiento económico proporcionando explicaciones claras y accesibles de conceptos
+                económicos complejos. Creemos que comprender economía no debería limitarse a académicos y profesionales
+                – debería estar disponible para todos los que deseen tomar decisiones informadas sobre su futuro financiero.
               </p>
             </CardContent>
           </Card>
@@ -46,12 +45,12 @@ export default function About() {
           <Card className="text-center hover:shadow-lg transition-shadow">
             <CardHeader>
               <BookOpen className="h-12 w-12 text-blue-600 mx-auto mb-4" />
-              <CardTitle className="text-lg">Comprehensive Coverage</CardTitle>
+              <CardTitle className="text-lg">Cobertura Integral</CardTitle>
             </CardHeader>
             <CardContent>
               <CardDescription className="text-base">
-                From basic concepts like supply and demand to advanced topics like monetary policy
-                and international trade, we cover it all.
+                Desde conceptos básicos como oferta y demanda hasta temas avanzados como política monetaria
+                e comercio internacional, cubrimos todo.
               </CardDescription>
             </CardContent>
           </Card>
@@ -59,12 +58,12 @@ export default function About() {
           <Card className="text-center hover:shadow-lg transition-shadow">
             <CardHeader>
               <Users className="h-12 w-12 text-green-600 mx-auto mb-4" />
-              <CardTitle className="text-lg">Community Driven</CardTitle>
+              <CardTitle className="text-lg">Impulsado por la Comunidad</CardTitle>
             </CardHeader>
             <CardContent>
               <CardDescription className="text-base">
-                Our community of economists, students, and professionals contribute definitions,
-                examples, and insights to keep content current and relevant.
+                Nuestra comunidad de economistas, estudiantes y profesionales contribuyen definiciones,
+                ejemplos e insights para mantener el contenido actual y relevante.
               </CardDescription>
             </CardContent>
           </Card>
@@ -72,12 +71,12 @@ export default function About() {
           <Card className="text-center hover:shadow-lg transition-shadow">
             <CardHeader>
               <Target className="h-12 w-12 text-purple-600 mx-auto mb-4" />
-              <CardTitle className="text-lg">Practical Focus</CardTitle>
+              <CardTitle className="text-lg">Enfoque Práctico</CardTitle>
             </CardHeader>
             <CardContent>
               <CardDescription className="text-base">
-                Every term includes real-world examples and practical applications to help you
-                understand how economic concepts affect daily life.
+                Cada término incluye ejemplos del mundo real y aplicaciones prácticas para ayudarte
+                a comprender cómo los conceptos económicos afectan la vida diaria.
               </CardDescription>
             </CardContent>
           </Card>
@@ -85,12 +84,12 @@ export default function About() {
           <Card className="text-center hover:shadow-lg transition-shadow">
             <CardHeader>
               <Award className="h-12 w-12 text-orange-600 mx-auto mb-4" />
-              <CardTitle className="text-lg">Quality Assured</CardTitle>
+              <CardTitle className="text-lg">Calidad Garantizada</CardTitle>
             </CardHeader>
             <CardContent>
               <CardDescription className="text-base">
-                All content undergoes review by subject matter experts to ensure accuracy,
-                clarity, and educational value.
+                Todo el contenido se revisa por expertos en la materia para garantizar precisión,
+                claridad y valor educativo.
               </CardDescription>
             </CardContent>
           </Card>
@@ -99,39 +98,39 @@ export default function About() {
         {/* What We Offer */}
         <div className="mb-16">
           <h2 className="text-3xl font-bold text-center text-zinc-900 dark:text-zinc-50 mb-12">
-            What We Offer
+            Lo Que Ofrecemos
           </h2>
           <div className="grid lg:grid-cols-2 gap-8">
             <Card>
               <CardHeader>
-                <CardTitle className="text-xl">For Students</CardTitle>
+                <CardTitle className="text-xl">Para Estudiantes</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 <p className="text-zinc-600 dark:text-zinc-400">
-                  Clear explanations of economic principles for introductory and intermediate economics courses.
+                  Explicaciones claras de principios económicos para cursos de economía introductoria e intermedia.
                 </p>
                 <ul className="list-disc list-inside space-y-1 text-zinc-600 dark:text-zinc-400 ml-4">
-                  <li>Simplified definitions with examples</li>
-                  <li>Visual aids and diagrams</li>
-                  <li>Study guides and key concepts</li>
-                  <li>Practice questions and quizzes</li>
+                  <li>Definiciones simplificadas con ejemplos</li>
+                  <li>Ayudas visuales y diagramas</li>
+                  <li>Guías de estudio y conceptos clave</li>
+                  <li>Preguntas de práctica y cuestionarios</li>
                 </ul>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader>
-                <CardTitle className="text-xl">For Professionals</CardTitle>
+                <CardTitle className="text-xl">Para Profesionales</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 <p className="text-zinc-600 dark:text-zinc-400">
-                  Quick reference for business decisions, policy analysis, and financial planning.
+                  Referencia rápida para decisiones comerciales, análisis de políticas y planificación financiera.
                 </p>
                 <ul className="list-disc list-inside space-y-1 text-zinc-600 dark:text-zinc-400 ml-4">
-                  <li>Advanced economic concepts</li>
-                  <li>Industry-specific terminology</li>
-                  <li>Real-world case studies</li>
-                  <li>Policy implications and analysis</li>
+                  <li>Conceptos económicos avanzados</li>
+                  <li>Terminología específica de la industria</li>
+                  <li>Estudios de casos del mundo real</li>
+                  <li>Implicaciones de políticas y análisis</li>
                 </ul>
               </CardContent>
             </Card>
@@ -143,24 +142,24 @@ export default function About() {
           <Card className="bg-gradient-to-r from-zinc-100 to-zinc-200 dark:from-zinc-800 dark:to-zinc-700">
             <CardContent className="py-12">
               <h3 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 mb-4">
-                Ready to Explore Economics?
+                ¿Listo para Explorar la Economía?
               </h3>
               <p className="text-lg text-zinc-600 dark:text-zinc-400 mb-6 max-w-2xl mx-auto">
-                Start your journey into the fascinating world of economics. Browse our collection
-                of terms, contribute your knowledge, or join our community of learners.
+                Comienza tu viaje en el fascinante mundo de la economía. Explora nuestra colección
+                de términos, contribuye tu conocimiento, o únete a nuestra comunidad de aprendices.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a
                   href="/terms"
                   className="inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
                 >
-                  Browse Terms
+                  Explorar Términos
                 </a>
                 <a
                   href="/auth/sign-up"
                   className="inline-flex items-center justify-center px-6 py-3 border border-zinc-300 dark:border-zinc-600 text-zinc-700 dark:text-zinc-300 font-medium rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
                 >
-                  Join Community
+                  Únete a la Comunidad
                 </a>
               </div>
             </CardContent>

@@ -22,20 +22,25 @@ export function Filter({
   const hasActiveFilter = selectedCategory && selectedCategory !== "All Categories";
 
   return (
-    <div className={cn("flex flex-col gap-3 sm:flex-row sm:items-center", className)}>
-      <div className="flex items-center gap-2">
+    <fieldset className={cn("flex flex-col gap-3 sm:flex-row sm:items-center", className)}>
+      <legend className="flex items-center gap-2">
         <FilterIcon className="h-4 w-4 text-zinc-500" />
         <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
-          Filter by:
+          Filtrar por:
         </span>
-      </div>
+      </legend>
 
       <div className="flex flex-1 items-center gap-2">
+        <label htmlFor="category-filter" className="sr-only">
+          Seleccionar categoría
+        </label>
         <Select
+          id="category-filter"
           value={selectedCategory}
           onChange={(e) => onCategoryChange(e.target.value)}
           className="flex-1 sm:w-auto sm:min-w-[200px]"
           disabled={isLoading}
+          aria-label="Filtrar términos por categoría"
         >
           {categories.map((category) => (
             <option key={category} value={category}>
@@ -50,27 +55,28 @@ export function Filter({
             size="sm"
             onClick={() => onCategoryChange("All Categories")}
             className="gap-1"
+            aria-label="Limpiar filtros"
           >
             <X className="h-3 w-3" />
-            Clear
+            Limpiar
           </Button>
         )}
       </div>
 
       {hasActiveFilter && (
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2" role="status" aria-live="polite">
           <Badge variant="secondary" className="gap-1">
             {selectedCategory}
             <button
               onClick={() => onCategoryChange("All Categories")}
               className="ml-1 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-700"
-              aria-label={`Remove ${selectedCategory} filter`}
+              aria-label={`Eliminar filtro ${selectedCategory}`}
             >
               <X className="h-3 w-3" />
             </button>
           </Badge>
         </div>
       )}
-    </div>
+    </fieldset>
   );
 }

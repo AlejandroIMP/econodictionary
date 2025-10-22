@@ -14,12 +14,12 @@ import { Button } from "~/features/shared/components/ui/button";
 import { useAuthStore } from "~/features/auth/store/useAuthStore";
 
 const aboutLinks = [
-  { href: "/about", title: "About Us", description: "Learn more about our mission to provide comprehensive economic education." },
-  { href: "/about/team", title: "Team", description: "Meet the people behind Econodictionary" },
-  { href: "/about/contact", title: "Contact", description: "Get in touch with our team" },
-  { href: "/about/faq", title: "FAQ", description: "Frequently asked questions" },
-  { href: "/privacy", title: "Privacy Policy", description: "How we protect your data" },
-  { href: "/terms-of-service", title: "Terms of Service", description: "Our terms and conditions" },
+  { href: "/about", title: "Sobre Nosotros", description: "Aprende más sobre nuestra misión de proporcionar educación económica integral." },
+  { href: "/about/team", title: "Equipo", description: "Conoce al equipo detrás de Econodictionary" },
+  { href: "/about/contact", title: "Contacto", description: "Ponte en contacto con nuestro equipo" },
+  { href: "/about/faq", title: "Preguntas Frecuentes", description: "Preguntas más frecuentes" },
+  { href: "/privacy", title: "Política de Privacidad", description: "Cómo protegemos tus datos" },
+  { href: "/terms-of-service", title: "Términos de Servicio", description: "Nuestros términos y condiciones" },
 ];
 
 export function GlobalNavigation() {
@@ -52,12 +52,12 @@ export function GlobalNavigation() {
                       to="/terms"
                       className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
                     >
-                      Terms
+                      Términos
                     </Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger>About</NavigationMenuTrigger>
+                  <NavigationMenuTrigger>Acerca de</NavigationMenuTrigger>
                   <NavigationMenuContent className="left-auto right-0">
                     <ul className="grid w-[280px] gap-2 p-3 md:w-[300px] md:grid-cols-1 lg:grid-cols-2 lg:w-[375px]">
                       {aboutLinks.map((link) => (
@@ -85,13 +85,13 @@ export function GlobalNavigation() {
                 <Link to="/profile" onClick={closeMobileMenu}>
                   <Button variant="ghost" size="sm" className="gap-2">
                     <User className="h-4 w-4" />
-                    <span className="hidden sm:inline">{user?.username || "Profile"}</span>
+                    <span className="hidden sm:inline">{user?.username || "Perfil"}</span>
                   </Button>
                 </Link>
                 <Link to="/auth/sign-out" onClick={closeMobileMenu}>
                   <Button variant="outline" size="sm" className="gap-2">
                     <LogIn className="h-4 w-4" />
-                    <span className="hidden sm:inline">Sign Out</span>
+                    <span className="hidden sm:inline">Cerrar Sesión</span>
                   </Button>
                 </Link>
               </div>
@@ -139,11 +139,11 @@ export function GlobalNavigation() {
               onClick={closeMobileMenu}
               className="rounded-md px-3 py-2 text-sm font-medium text-zinc-900 transition-colors hover:bg-zinc-100 dark:text-zinc-50 dark:hover:bg-zinc-900"
             >
-              Terms
+              Términos
             </Link>
             <div className="rounded-md border border-zinc-200 p-3 dark:border-zinc-800">
               <div className="mb-3 text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-                About
+                Acerca de
               </div>
               <div className="flex flex-col gap-2">
                 {aboutLinks.map((link) => (
@@ -186,13 +186,13 @@ export function GlobalNavigation() {
                 <Link to="auth/sign-in" onClick={closeMobileMenu}>
                   <Button variant="outline" className="w-full justify-start gap-2">
                     <LogIn className="h-4 w-4" />
-                    Sign In
+                    Iniciar Sesión
                   </Button>
                 </Link>
                 <Link to="auth/sign-up" onClick={closeMobileMenu}>
                   <Button className="w-full justify-start gap-2">
                     <UserPlus className="h-4 w-4" />
-                    Create account
+                    Crear Cuenta
                   </Button>
                 </Link>
               </div>
