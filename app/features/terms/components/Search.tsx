@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router";
 import { Search as SearchIcon, X } from "lucide-react";
 import { Input } from "~/features/shared/components/ui/input";
 import { Button } from "~/features/shared/components/ui/button";
@@ -16,6 +18,20 @@ export function Search({
   placeholder = "Buscar términos...",
   className,
 }: SearchProps) {
+  const [searchParams] = useSearchParams();
+  const [initialized, setInitialized] = useState(false);
+
+  // Lee el parámetro 'search' de la URL al montar el componente
+  useEffect(() => {
+    if (!initialized) {
+      const urlSearch = searchParams.get("search");
+      if (urlSearch) {
+        onChange(decodeURIComponent(urlSearch));
+      }
+      setInitialized(true);
+    }
+  }, [searchParams, onChange, initialized]);
+
   return (
     <div className={cn("relative w-full", className)}>
       <label htmlFor="search-terms" className="sr-only">

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { animate, createScope } from "animejs";
 import {
   BookOpen,
@@ -8,6 +8,7 @@ import {
   Star,
   Users,
   Globe,
+  X,
 } from "lucide-react";
 import {
   Card,
@@ -22,7 +23,9 @@ import { CategoriesSection } from "~/features/home/components";
 export default function Home() {
   const rootRef = useRef<HTMLDivElement>(null);
   const scopeRef = useRef<any>(null);
+  const navigate = useNavigate();
   const [searchFocused, setSearchFocused] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
     if (!rootRef.current) return;
@@ -203,14 +206,38 @@ export default function Home() {
             {/* Búsqueda principal con animación de glow */}
             <div className="hero-cta max-w-2xl mx-auto mb-8">
               <div className="relative">
+                <label htmlFor="hero-search" className="sr-only">
+                  Buscar términos económicos
+                </label>
                 <Input
+                  id="hero-search"
                   type="search"
                   placeholder="Buscar términos económicos..."
-                  className="search-input w-full h-14 pl-12 pr-4 text-lg rounded-xl border-2 border-white/30 bg-white/10 text-white placeholder:text-white/60 backdrop-blur-sm transition-all"
+                  value={searchValue}
+                  onChange={(e) => setSearchValue(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && searchValue.trim()) {
+                      navigate(`/terms?search=${encodeURIComponent(searchValue)}`);
+                    }
+                  }}
+                  className="search-input w-full h-14 pl-12 pr-10 text-lg rounded-xl border-2 border-white/30 bg-white/10 text-white placeholder:text-white/60 backdrop-blur-sm transition-all"
                   onFocus={() => setSearchFocused(true)}
                   onBlur={() => setSearchFocused(false)}
+                  aria-label="Buscar términos económicos por nombre o definición"
                 />
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60 pointer-events-none" />
+                {searchValue && (
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    className="absolute right-1 top-1/2 h-8 w-8 -translate-y-1/2 hover:bg-white/10 text-white/60 hover:text-white"
+                    onClick={() => setSearchValue("")}
+                    aria-label="Limpiar búsqueda"
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                )}
               </div>
             </div>
 
